@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RanggStore Top up Robux</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #ff8000;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .stat-box {
+      background: #333;
+      padding: 15px;
+      border-radius: 10px;
+      flex: 1;
+      margin: 10px;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    .payment-options {
+      display: flex;
+      justify-content: space-around;
+      margin: 15px 0;
+    }
+    .payment-options label {
+      cursor: pointer;
+    }
+    button {
+      width: 100%;
+      background: #ff8000;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #e56e00;
+    }
+    .price-box {
+      background: #222;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 15px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Pengen Top Up Robux? Ikutin Langkah Dibawah Ini!
+  </header>
+
+  <div class="container">
+    <div class="stats">
+      <div class="stat-box">∞<br>Available Stock</div>
+      <div class="stat-box">Rp 10.000 / 100 R$</div>
+      <div class="stat-box">25 R$<br>Minimum Purchase</div>
+      <div class="stat-box">1743<br>Total Order</div>
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Masukkan Username">
+    </div>
+
+    <div class="form-group">
+      <label for="jumlah">Pilih Jumlah Robux</label>
+      <select id="jumlah" onchange="hitungHarga()">
+        <option value="">-- Pilih Jumlah --</option>
+        <option value="200">200 R$</option>
+        <option value="400">400 R$</option>
+        <option value="500">500 R$</option>
+        <option value="1000">1000 R$</option>
+        <option value="1500">1500 R$</option>
+      </select>
+    </div>
+
+    <div class="price-box">
+      <p>Total Robux: <span id="totalRobux">0</span> R$</p>
+      <p>Harga: Rp <span id="totalHarga">0</span></p>
+    </div>
+
+    <div class="form-group">
+      <label>Pilih Payment</label>
+      <div class="payment-options">
+        <label><input type="radio" name="payment" value="DANA"> <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_dana_blue.svg" alt="DANA" width="60"></label>
+        <label><input type="radio" name="payment" value="GOPAY"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/GoPay_logo.svg" alt="GOPAY" width="80"></label>
+      </div>
+    </div>
+
+    <button onclick="kirimPesan()">Beli Sekarang</button>
+  </div>
+
+  <script>
+    function hitungHarga() {
+      let jumlah = document.getElementById("jumlah").value;
+      let totalRobux = parseInt(jumlah) || 0;
+      let harga = (totalRobux / 100) * 10000;
+      document.getElementById("totalRobux").innerText = totalRobux;
+      document.getElementById("totalHarga").innerText = harga.toLocaleString("id-ID");
+    }
+
+    function kirimPesan() {
+      let username = document.getElementById("username").value;
+      let jumlah = document.getElementById("jumlah").value;
+      let payment = document.querySelector('input[name="payment"]:checked');
+      let totalHarga = document.getElementById("totalHarga").innerText;
+
+      if (!username || !jumlah || !payment) {
+        alert("Harap isi semua data terlebih dahulu!");
+        return;
+      }
+
+      let pesan = `Order Robux%0A============%0AUsername: ${username}%0ATotal Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0APayment: ${payment.value}%0A============`;
+
+      // Ganti nomor admin dengan nomor WhatsApp bisnis kamu
+      let nomorAdmin = "6283846078733"; 
+      let url = `https://wa.me/${nomorAdmin}?text=${pesan}`;
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
