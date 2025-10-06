@@ -135,6 +135,54 @@
     footer strong {
       color: #ff8800;
     }
+
+    /* Modal Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 16px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+    .modal h2 {
+      margin-bottom: 15px;
+      color: #ffbb33;
+    }
+    .modal p {
+      font-size: 15px;
+      margin: 8px 0;
+    }
+    .modal-buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-around;
+    }
+    .modal-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-cancel {
+      background: #555;
+      color: #fff;
+    }
+    .btn-confirm {
+      background: #ff5500;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -145,7 +193,7 @@
   <div class="container">
     <div class="stats">
       <div class="stat-box">∞ <span>Available Stock</span></div>
-      <div class="stat-box">Rp 10.000 / 100 R$ <span>Price</span></div>
+      <div class="stat-box">Rp 14.500 / 100 R$ <span>Price</span></div>
       <div class="stat-box">200 R$ <span>Minimum Purchase</span></div>
       <div class="stat-box">30 <span>Total Order</span></div>
     </div>
@@ -173,22 +221,21 @@
         Harga: Rp <span id="totalHarga">0</span>
       </div>
 
-     <div class="form-group">
-  <label>Pilih Payment</label>
-  <div class="payment-options">
-    <label>
-      <input type="radio" name="payment" value="DANA">
-      <img src="https://www.payex.io/wp-content/uploads/2023/09/logo-dana.png" alt="DANA" width="80"> DANA
-    </label>
-    <label>
-      <input type="radio" name="payment" value="GOPAY">
-      <img src="https://logos-world.net/wp-content/uploads/2023/02/GoPay-Logo.png" alt="GOPAY" width="80"> GOPAY
-    </label>
-  </div>
-</div>
-        
+      <div class="form-group">
+        <label>Pilih Payment</label>
+        <div class="payment-options">
+          <label>
+            <input type="radio" name="payment" value="DANA">
+            <img src="https://www.payex.io/wp-content/uploads/2023/09/logo-dana.png" alt="DANA" width="80"> DANA
+          </label>
+          <label>
+            <input type="radio" name="payment" value="GOPAY">
+            <img src="https://logos-world.net/wp-content/uploads/2023/02/GoPay-Logo.png" alt="GOPAY" width="80"> GOPAY
+          </label>
+        </div>
+      </div>
 
-      <button class="btn-buy" onclick="kirimPesan()">Beli Sekarang</button>
+      <button class="btn-buy" onclick="showPopup()">Beli Sekarang</button>
     </div>
   </div>
 
@@ -197,16 +244,40 @@
     Powered By Github.io
   </footer>
 
+  <!-- Modal -->
+  <div id="popup" class="modal">
+    <div class="modal-content">
+      <h2>Detail Order</h2>
+      <p>Terimakasih telah membeli robux dari store kami :3<br>Berikut detail order kamu</p>
+      <p id="detailOrder"></p>
+      <div class="modal-buttons">
+        <button class="btn-cancel" onclick="closePopup()">Batal</button>
+        <button class="btn-confirm" onclick="kirimPesan()">Beli</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     function hitungHarga() {
       let jumlah = document.getElementById("jumlah").value;
       let totalRobux = parseInt(jumlah) || 0;
-      let harga = (totalRobux / 100) * 10000;
+      let harga = (totalRobux / 100) * 14500; // harga
       document.getElementById("totalRobux").innerText = totalRobux;
       document.getElementById("totalHarga").innerText = harga.toLocaleString("id-ID");
     }
 
-    function kirimPesan() {
+    function getGamePass(jumlah) {
+      switch(jumlah) {
+        case "200": return 286;
+        case "400": return 572;
+        case "500": return 715;
+        case "1000": return 1429;
+        case "1500": return 2143;
+        default: return "-";
+      }
+    }
+
+    function showPopup() {
       let username = document.getElementById("username").value;
       let jumlah = document.getElementById("jumlah").value;
       let payment = document.querySelector('input[name="payment"]:checked');
@@ -217,11 +288,33 @@
         return;
       }
 
-      let pesan = `Order Robux%0A============%0AUsername: ${username}%0ATotal Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0APayment: ${payment.value}%0A============`;
+      let gamePass = getGamePass(jumlah);
+
+      let detail = `
+      Username: ${username}<br>
+      Jumlah Robux: ${jumlah} R$<br>
+      Price: Rp ${totalHarga}<br>
+      *Tolong buat Game Pass senilai (${gamePass})
+      `;
+      document.getElementById("detailOrder").innerHTML = detail;
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    function kirimPesan() {
+      let username = document.getElementById("username").value;
+      let jumlah = document.getElementById("jumlah").value;
+      let totalHarga = document.getElementById("totalHarga").innerText;
+
+      let pesan = `Order Robux%0A////////////////////%0AUsername: ${username}%0AJumlah Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0ADiskon: -%0A////////////////////%0ARanggStore`;
 
       let nomorAdmin = "6283846078733"; 
       let url = `https://wa.me/${nomorAdmin}?text=${pesan}`;
       window.open(url, "_blank");
+      closePopup();
     }
   </script>
 </body>
