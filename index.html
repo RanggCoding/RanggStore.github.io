@@ -94,8 +94,8 @@
     .payment-options input {
       display: none;
     }
-    .payment-options label:hover {
-      background: #ff5500;
+    .payment-options label.active {
+      background: linear-gradient(135deg, #ff8800, #ff5500);
     }
     .payment-options img {
       height: 35px;
@@ -136,7 +136,55 @@
       color: #ff8800;
     }
 
-    /* Popup + Animasi */
+    /* Dynamic Island */
+    #dynamic-island {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f1f1f;
+      padding: 10px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      z-index: 1000;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translate(-50%, -10px);}
+      to {opacity: 1; transform: translate(-50%, 0);}
+    }
+
+    /* Coupon */
+    .coupon-box {
+      margin-top: 20px;
+      background: #262626;
+      padding: 15px;
+      border-radius: 12px;
+    }
+    .coupon-box input {
+      width: 70%;
+      display: inline-block;
+    }
+    .coupon-box button {
+      width: 25%;
+      display: inline-block;
+      background: #ff8800;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .coupon-result {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* Popup */
     .popup {
       display: none;
       position: fixed;
@@ -204,6 +252,9 @@
     Pengen Top Up Robux? Ikutin Langkah Dibawah Ini!
   </header>
 
+  <!-- Dynamic Island -->
+  <div id="dynamic-island"><span id="island-text"></span></div>
+
   <div class="container">
     <div class="stats">
       <div class="stat-box">∞ <span>Available Stock</span></div>
@@ -235,15 +286,22 @@
         Harga: Rp <span id="totalHarga">0</span>
       </div>
 
-     <div class="form-group">
+      <!-- Coupon -->
+      <div class="coupon-box">
+        <input type="text" id="coupon" placeholder="Masukkan Kode Coupon">
+        <button onclick="redeemCoupon()">Redeem</button>
+        <div class="coupon-result" id="couponResult"></div>
+      </div>
+
+      <div class="form-group">
         <label>Pilih Payment</label>
         <div class="payment-options">
-          <label>
-            <input type="radio" name="payment" value="DANA">
+          <label id="danaLabel">
+            <input type="radio" name="payment" value="DANA" onclick="selectPayment('danaLabel')">
             <img src="https://www.payex.io/wp-content/uploads/2023/09/logo-dana.png" alt="DANA" width="80"> DANA
           </label>
-          <label>
-            <input type="radio" name="payment" value="GOPAY">
+          <label id="gopayLabel">
+            <input type="radio" name="payment" value="GOPAY" onclick="selectPayment('gopayLabel')">
             <img src="https://logos-world.net/wp-content/uploads/2023/02/GoPay-Logo.png" alt="GOPAY" width="80"> GOPAY
           </label>
         </div>
@@ -278,12 +336,36 @@
   </div>
 
   <script>
+    let hargaPer100 = 14500;
+    let diskon = 0;
+
     function hitungHarga() {
       let jumlah = document.getElementById("jumlah").value;
       let totalRobux = parseInt(jumlah) || 0;
-      let harga = (totalRobux / 100) * 14500; // harga baru
+      let harga = (totalRobux / 100) * hargaPer100;
+      let hargaDiskon = harga - (harga * diskon);
       document.getElementById("totalRobux").innerText = totalRobux;
-      document.getElementById("totalHarga").innerText = harga.toLocaleString("id-ID");
+      document.getElementById("totalHarga").innerText = hargaDiskon.toLocaleString("id-ID");
+    }
+
+    function redeemCoupon() {
+      let kode = document.getElementById("coupon").value.trim();
+      let result = document.getElementById("couponResult");
+      if (kode === "RanggStore") {
+        diskon = 0.02;
+        result.innerText = "Redeem Berhasil! Diskon 2% diterapkan.";
+        result.style.color = "lightgreen";
+      } else {
+        diskon = 0;
+        result.innerText = "Kode salah";
+        result.style.color = "red";
+      }
+      hitungHarga();
+    }
+
+    function selectPayment(id) {
+      document.querySelectorAll(".payment-options label").forEach(l => l.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
     }
 
     function showPopup() {
@@ -297,7 +379,6 @@
         return;
       }
 
-      // tentukan game pass sesuai jumlah
       let gamePass = "";
       if (jumlah == 200) gamePass = "286";
       if (jumlah == 400) gamePass = "572";
@@ -310,14 +391,11 @@
       document.getElementById("popupHarga").innerText = totalHarga;
       document.getElementById("popupGamepass").innerText = gamePass;
 
-      let popup = document.getElementById("popup");
-      popup.classList.add("show");
+      document.getElementById("popup").classList.add("show");
     }
 
     function closePopup() {
-      let popup = document.getElementById("popup");
-      popup.classList.remove("show");
-      setTimeout(() => { popup.style.display = "none"; }, 300);
+      document.getElementById("popup").classList.remove("show");
     }
 
     function kirimPesan() {
@@ -326,7 +404,7 @@
       let payment = document.querySelector('input[name="payment"]:checked');
       let totalHarga = document.getElementById("totalHarga").innerText;
 
-      let pesan = `Order Robux%0A////////////////////%0AUsername: ${username}%0AJumlah Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0ADiskon: -%0APayment: ${payment.value}%0A////////////////////%0ARanggStore`;
+      let pesan = `Order Robux%0A////////////////////%0AUsername: ${username}%0AJumlah Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0ADiskon: ${diskon > 0 ? "2%" : "-"}%0APayment: ${payment.value}%0A////////////////////%0ARanggStore`;
 
       let nomorAdmin = "6283846078733"; 
       let url = `https://wa.me/${nomorAdmin}?text=${pesan}`;
@@ -334,6 +412,19 @@
 
       closePopup();
     }
+
+    // Dynamic Island text
+    const texts = [
+      "Jika ada bug tolong lapor ke owner",
+      "Aman dan amanah",
+      "Dibuat dengan cinta",
+      "Harga mahal? boleh komplen ke admin :3"
+    ];
+    let idx = 0;
+    setInterval(() => {
+      document.getElementById("island-text").innerText = texts[idx];
+      idx = (idx + 1) % texts.length;
+    }, 3000);
   </script>
 </body>
 </html>
