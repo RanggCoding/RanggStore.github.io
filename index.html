@@ -414,17 +414,53 @@
     }
 
     // Dynamic Island text
-    const texts = [
+ const texts = [
       "Jika ada bug tolong lapor ke owner",
       "Aman dan amanah",
       "Dibuat dengan cinta",
       "Harga mahal? boleh komplen ke admin :3"
     ];
+
+    const island = document.getElementById("dynamic-island");
+    const textEl = document.getElementById("island-text");
+
+    const left = document.createElement("span");
+    const right = document.createElement("span");
+    island.prepend(left);
+    island.appendChild(right);
+
     let idx = 0;
-    setInterval(() => {
-      document.getElementById("island-text").innerText = texts[idx];
+
+    function updateIsland() {
+      textEl.innerText = texts[idx];
       idx = (idx + 1) % texts.length;
-    }, 3000);
+      animateCircles();
+    }
+
+    function animateCircles() {
+      const frames = [
+        ["O", "o"],
+        ["o", "O"],
+        ["O", "O"],
+        ["o", "o"]
+      ];
+      let animStep = 0;
+
+      function frameStep() {
+        const frame = frames[animStep % frames.length];
+        left.innerText = frame[0] + " ";
+        right.innerText = " " + frame[1];
+        animStep++;
+        if (animStep < 8) {
+          setTimeout(frameStep, 300);
+        }
+      }
+      frameStep();
+    }
+
+    // pertama kali jalan
+    updateIsland();
+    setInterval(updateIsland, 10000);
   </script>
 </body>
 </html>
