@@ -136,52 +136,66 @@
       color: #ff8800;
     }
 
-    /* Modal Popup */
-    .modal {
+    /* Popup + Animasi */
+    .popup {
       display: none;
       position: fixed;
-      z-index: 1000;
-      left: 0; top: 0;
+      top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.7);
       justify-content: center;
       align-items: center;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
-    .modal-content {
+    .popup.show {
+      display: flex;
+      opacity: 1;
+    }
+    .popup-content {
       background: #1e1e1e;
-      padding: 20px;
+      padding: 25px;
       border-radius: 16px;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      width: 90%;
+      max-width: 450px;
+      text-align: left;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
     }
-    .modal h2 {
-      margin-bottom: 15px;
+    .popup.show .popup-content {
+      transform: scale(1);
+    }
+    .popup-content h2 {
+      margin-top: 0;
       color: #ffbb33;
     }
-    .modal p {
-      font-size: 15px;
-      margin: 8px 0;
-    }
-    .modal-buttons {
-      margin-top: 15px;
+    .popup-buttons {
       display: flex;
-      justify-content: space-around;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
     }
-    .modal-buttons button {
-      padding: 10px 20px;
+    .btn {
+      padding: 10px 18px;
       border: none;
       border-radius: 10px;
-      font-weight: bold;
       cursor: pointer;
+      font-weight: bold;
     }
     .btn-cancel {
-      background: #555;
+      background: #444;
       color: #fff;
     }
     .btn-confirm {
-      background: #ff5500;
+      background: linear-gradient(135deg, #ff8800, #ff5500);
       color: #fff;
+    }
+    .popup-content a {
+      color: #00aaff;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -221,7 +235,7 @@
         Harga: Rp <span id="totalHarga">0</span>
       </div>
 
-      <div class="form-group">
+     <div class="form-group">
         <label>Pilih Payment</label>
         <div class="payment-options">
           <label>
@@ -244,15 +258,21 @@
     Powered By Github.io
   </footer>
 
-  <!-- Modal -->
-  <div id="popup" class="modal">
-    <div class="modal-content">
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
       <h2>Detail Order</h2>
-      <p>Terimakasih telah membeli robux dari store kami :3<br>Berikut detail order kamu</p>
-      <p id="detailOrder"></p>
-      <div class="modal-buttons">
-        <button class="btn-cancel" onclick="closePopup()">Batal</button>
-        <button class="btn-confirm" onclick="kirimPesan()">Beli</button>
+      <p>Terimakasih telah membeli robux dari store kami :3 berikut detail order kamu</p>
+      <p><b>Username:</b> <span id="popupUsername"></span></p>
+      <p><b>Jumlah Robux:</b> <span id="popupRobux"></span></p>
+      <p><b>Price:</b> Rp <span id="popupHarga"></span></p>
+      <p><b>Tolong buat Game Pass Senilai:</b> <span id="popupGamepass"></span></p>
+      <p>Jika tidak tahu membuat game pass:<br>
+        <a href="https://youtu.be/PRO9QRvo4KA?si=Z5j_aFhdsHUMtemb" target="_blank">Tutorial Game Pass</a>
+      </p>
+      <div class="popup-buttons">
+        <button class="btn btn-cancel" onclick="closePopup()">Batal</button>
+        <button class="btn btn-confirm" onclick="kirimPesan()">Beli</button>
       </div>
     </div>
   </div>
@@ -261,20 +281,9 @@
     function hitungHarga() {
       let jumlah = document.getElementById("jumlah").value;
       let totalRobux = parseInt(jumlah) || 0;
-      let harga = (totalRobux / 100) * 14500; // harga
+      let harga = (totalRobux / 100) * 14500; // harga baru
       document.getElementById("totalRobux").innerText = totalRobux;
       document.getElementById("totalHarga").innerText = harga.toLocaleString("id-ID");
-    }
-
-    function getGamePass(jumlah) {
-      switch(jumlah) {
-        case "200": return 286;
-        case "400": return 572;
-        case "500": return 715;
-        case "1000": return 1429;
-        case "1500": return 2143;
-        default: return "-";
-      }
     }
 
     function showPopup() {
@@ -288,32 +297,41 @@
         return;
       }
 
-      let gamePass = getGamePass(jumlah);
+      // tentukan game pass sesuai jumlah
+      let gamePass = "";
+      if (jumlah == 200) gamePass = "286";
+      if (jumlah == 400) gamePass = "572";
+      if (jumlah == 500) gamePass = "715";
+      if (jumlah == 1000) gamePass = "1429";
+      if (jumlah == 1500) gamePass = "2143";
 
-      let detail = `
-      Username: ${username}<br>
-      Jumlah Robux: ${jumlah} R$<br>
-      Price: Rp ${totalHarga}<br>
-      *Tolong buat Game Pass senilai (${gamePass})
-      `;
-      document.getElementById("detailOrder").innerHTML = detail;
-      document.getElementById("popup").style.display = "flex";
+      document.getElementById("popupUsername").innerText = username;
+      document.getElementById("popupRobux").innerText = jumlah + " R$";
+      document.getElementById("popupHarga").innerText = totalHarga;
+      document.getElementById("popupGamepass").innerText = gamePass;
+
+      let popup = document.getElementById("popup");
+      popup.classList.add("show");
     }
 
     function closePopup() {
-      document.getElementById("popup").style.display = "none";
+      let popup = document.getElementById("popup");
+      popup.classList.remove("show");
+      setTimeout(() => { popup.style.display = "none"; }, 300);
     }
 
     function kirimPesan() {
       let username = document.getElementById("username").value;
       let jumlah = document.getElementById("jumlah").value;
+      let payment = document.querySelector('input[name="payment"]:checked');
       let totalHarga = document.getElementById("totalHarga").innerText;
 
-      let pesan = `Order Robux%0A////////////////////%0AUsername: ${username}%0AJumlah Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0ADiskon: -%0A////////////////////%0ARanggStore`;
+      let pesan = `Order Robux%0A////////////////////%0AUsername: ${username}%0AJumlah Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0ADiskon: -%0APayment: ${payment.value}%0A////////////////////%0ARanggStore`;
 
       let nomorAdmin = "6283846078733"; 
       let url = `https://wa.me/${nomorAdmin}?text=${pesan}`;
       window.open(url, "_blank");
+
       closePopup();
     }
   </script>
