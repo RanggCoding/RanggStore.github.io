@@ -6,254 +6,604 @@
   <title>Top Up Robux - RanggStore</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       color: #fff;
       margin: 0;
       padding: 0;
+      min-height: 100vh;
     }
+    
     header {
-      background: linear-gradient(135deg, #ff8800, #ff5500);
+      background: linear-gradient(135deg, rgba(255, 136, 0, 0.9), rgba(255, 85, 0, 0.9));
       padding: 25px;
       text-align: center;
       font-size: 24px;
-      font-weight: bold;
+      font-weight: 800;
       border-bottom: 4px solid #ffbb33;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
     }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shimmer 3s infinite linear;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+    }
+    
     .container {
       padding: 25px;
       max-width: 900px;
       margin: auto;
     }
+    
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin: 25px 0;
+      gap: 20px;
+      margin: 30px 0;
     }
+    
     .stat-box {
-      background: #1f1f1f;
-      padding: 20px;
-      border-radius: 16px;
+      background: rgba(31, 31, 31, 0.7);
+      padding: 25px;
+      border-radius: 20px;
       text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+    
+    .stat-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(255, 85, 0, 0.3);
+      border-color: rgba(255, 136, 0, 0.3);
+    }
+    
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .stat-box:hover::before {
+      left: 100%;
+    }
+    
     .stat-box span {
       display: block;
       font-size: 14px;
-      font-weight: normal;
-      margin-top: 5px;
+      font-weight: 600;
+      margin-top: 8px;
       color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+    
     .form-card {
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      margin-bottom: 25px;
+      background: rgba(30, 30, 30, 0.85);
+      padding: 30px;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      margin-bottom: 30px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
+    
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
+    
     label {
       display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
+      margin-bottom: 8px;
+      font-weight: 700;
       color: #ffbb33;
+      font-size: 16px;
+      letter-spacing: 0.5px;
     }
+    
     input, select {
       width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      border: 2px solid transparent;
       outline: none;
-      font-size: 15px;
-      background: #2b2b2b;
+      font-size: 16px;
+      background: rgba(43, 43, 43, 0.8);
       color: #fff;
+      transition: all 0.3s ease;
     }
+    
     input:focus, select:focus {
-      border: 2px solid #ff8800;
+      border-color: #ff8800;
+      box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.2);
+      transform: translateY(-2px);
     }
+    
     .payment-options {
       display: flex;
-      justify-content: space-around;
-      margin: 15px 0;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
     }
+    
     .payment-options label {
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: #2a2a2a;
-      padding: 8px 15px;
-      border-radius: 12px;
-      transition: 0.3s;
+      gap: 12px;
+      background: rgba(42, 42, 42, 0.8);
+      padding: 15px 25px;
+      border-radius: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex: 1;
+      min-width: 180px;
+      justify-content: center;
+      border: 2px solid transparent;
     }
+    
     .payment-options input {
       display: none;
     }
+    
     .payment-options label.active {
-      background: linear-gradient(135deg, #ff8800, #ff5500);
+      background: linear-gradient(135deg, rgba(255, 136, 0, 0.9), rgba(255, 85, 0, 0.9));
+      border-color: #ffbb33;
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4);
     }
+    
+    .payment-options label:hover:not(.active) {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 136, 0, 0.3);
+    }
+    
     .payment-options img {
       height: 35px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
+    
     .price-box {
-      background: #262626;
-      padding: 15px;
-      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(38, 38, 38, 0.9), rgba(50, 50, 50, 0.9));
+      padding: 25px;
+      border-radius: 20px;
       text-align: center;
-      margin: 20px 0;
-      font-size: 18px;
-      font-weight: bold;
+      margin: 30px 0;
+      font-size: 24px;
+      font-weight: 800;
+      border: 2px solid rgba(255, 136, 0, 0.3);
+      position: relative;
+      overflow: hidden;
     }
+    
+    .price-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff8800, #ff5500, #ff8800);
+      background-size: 200% 100%;
+      animation: slide 2s linear infinite;
+    }
+    
+    @keyframes slide {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
     .btn-buy {
       width: 100%;
       background: linear-gradient(135deg, #ff8800, #ff5500);
-      padding: 15px;
+      padding: 20px;
       border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
+      border-radius: 16px;
+      font-size: 20px;
+      font-weight: 800;
       cursor: pointer;
       color: #fff;
-      transition: 0.3s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
     }
+    
     .btn-buy:hover {
       background: linear-gradient(135deg, #ff5500, #ff3300);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 85, 0, 0.5);
     }
+    
+    .btn-buy:active {
+      transform: translateY(0);
+    }
+    
+    .btn-buy::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+      opacity: 0;
+    }
+    
+    .btn-buy:hover::after {
+      animation: shine 1s ease;
+    }
+    
+    @keyframes shine {
+      0% { opacity: 0; left: -50%; }
+      50% { opacity: 1; }
+      100% { opacity: 0; left: 150%; }
+    }
+    
     footer {
-      background: #1a1a1a;
+      background: rgba(26, 26, 26, 0.9);
       text-align: center;
-      padding: 20px;
-      font-size: 14px;
+      padding: 25px;
+      font-size: 15px;
       color: #aaa;
-      border-top: 2px solid #333;
+      border-top: 2px solid rgba(255, 136, 0, 0.3);
+      backdrop-filter: blur(10px);
+      margin-top: 50px;
     }
+    
     footer strong {
       color: #ff8800;
+      font-weight: 800;
     }
 
-    /* Dynamic Island */
+    /* Enhanced Dynamic Island */
     #dynamic-island {
       position: fixed;
-      top: 15px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: #1f1f1f;
-      padding: 10px 20px;
-      border-radius: 30px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-      font-size: 14px;
-      font-weight: 500;
+      background: rgba(31, 31, 31, 0.95);
+      padding: 14px 35px;
+      border-radius: 100px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      font-size: 15px;
+      font-weight: 600;
       color: #fff;
       z-index: 1000;
-      animation: fadeIn 0.5s ease-in-out;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 300px;
+      max-width: 400px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
     }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translate(-50%, -10px);}
-      to {opacity: 1; transform: translate(-50%, 0);}
+    
+    #dynamic-island::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 136, 0, 0.1), transparent);
+      animation: islandShine 8s infinite linear;
+      border-radius: 100px;
     }
-
-    /* Coupon */
+    
+    @keyframes islandShine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+    }
+    
+    #dynamic-island:hover {
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 15px 50px rgba(255, 85, 0, 0.3);
+      border-color: rgba(255, 136, 0, 0.4);
+    }
+    
+    .island-circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff8800, #ff5500);
+      position: relative;
+      animation: pulse 2s infinite ease-in-out;
+      flex-shrink: 0;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+    
+    #island-text {
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      flex: 1;
+      text-align: center;
+    }
+    
+    /* Enhanced Coupon */
     .coupon-box {
-      margin-top: 20px;
-      background: #262626;
-      padding: 15px;
-      border-radius: 12px;
+      margin-top: 25px;
+      background: linear-gradient(135deg, rgba(38, 38, 38, 0.9), rgba(50, 50, 50, 0.9));
+      padding: 20px;
+      border-radius: 20px;
+      border: 2px dashed rgba(255, 136, 0, 0.3);
     }
+    
     .coupon-box input {
       width: 70%;
       display: inline-block;
+      margin-right: 10px;
     }
+    
     .coupon-box button {
       width: 25%;
       display: inline-block;
-      background: #ff8800;
+      background: linear-gradient(135deg, #ff8800, #ff5500);
       color: #fff;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
       border: none;
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
     }
+    
+    .coupon-box button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4);
+    }
+    
     .coupon-result {
-      margin-top: 10px;
-      font-size: 14px;
+      margin-top: 15px;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      text-align: center;
     }
 
-    /* Popup */
+    /* Enhanced Popup */
     .popup {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
       justify-content: center;
       align-items: center;
-      z-index: 999;
+      z-index: 9999;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
     }
+    
     .popup.show {
       display: flex;
       opacity: 1;
+      animation: fadeIn 0.5s ease;
     }
+    
     .popup-content {
-      background: #1e1e1e;
-      padding: 25px;
-      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(40, 40, 40, 0.95));
+      padding: 40px;
+      border-radius: 30px;
       width: 90%;
-      max-width: 450px;
+      max-width: 500px;
       text-align: left;
       color: #fff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      transform: scale(0.8);
-      transition: transform 0.3s ease;
+      box-shadow: 0 30px 100px rgba(255, 85, 0, 0.3);
+      border: 1px solid rgba(255, 136, 0, 0.3);
+      transform: translateY(100px) scale(0.8);
+      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
     }
+    
     .popup.show .popup-content {
-      transform: scale(1);
+      transform: translateY(0) scale(1);
     }
+    
+    .popup-content::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff8800, #ff5500, #ff8800);
+      z-index: -1;
+      border-radius: 32px;
+      opacity: 0.3;
+      animation: rotate 3s linear infinite;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
     .popup-content h2 {
       margin-top: 0;
       color: #ffbb33;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
-    .popup-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 20px;
+    
+    .popup-content p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+      font-size: 16px;
     }
-    .btn {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
+    
+    .popup-content b {
+      color: #ffbb33;
     }
-    .btn-cancel {
-      background: #444;
-      color: #fff;
-    }
-    .btn-confirm {
-      background: linear-gradient(135deg, #ff8800, #ff5500);
-      color: #fff;
-    }
+    
     .popup-content a {
       color: #00aaff;
       text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .popup-content a:hover {
+      color: #ff8800;
+      text-decoration: underline;
+    }
+    
+    .popup-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      padding: 15px 35px;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 140px;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn:hover::after {
+      left: 100%;
+    }
+    
+    .btn-cancel {
+      background: rgba(68, 68, 68, 0.8);
+      color: #fff;
+      border: 2px solid transparent;
+    }
+    
+    .btn-cancel:hover {
+      background: rgba(88, 88, 88, 0.9);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .btn-confirm {
+      background: linear-gradient(135deg, #ff8800, #ff5500);
+      color: #fff;
+      border: 2px solid transparent;
+    }
+    
+    .btn-confirm:hover {
+      background: linear-gradient(135deg, #ff5500, #ff3300);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(255, 85, 0, 0.5);
+      border-color: rgba(255, 187, 51, 0.5);
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(255, 136, 0, 0.5);
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(720deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
   <header>
     Pengen Top Up Robux? Ikutin Langkah Dibawah Ini!
   </header>
 
-  <!-- Dynamic Island -->
-  <div id="dynamic-island"><span id="island-text"></span></div>
+  <!-- Enhanced Dynamic Island -->
+  <div id="dynamic-island">
+    <div class="island-circle"></div>
+    <span id="island-text"></span>
+    <div class="island-circle"></div>
+  </div>
 
   <div class="container">
     <div class="stats">
@@ -286,7 +636,7 @@
         Harga: Rp <span id="totalHarga">0</span>
       </div>
 
-      <!-- Coupon -->
+      <!-- Enhanced Coupon -->
       <div class="coupon-box">
         <input type="text" id="coupon" placeholder="Masukkan Kode Coupon">
         <button onclick="redeemCoupon()">Redeem</button>
@@ -316,26 +666,27 @@
     Powered By Github.io
   </footer>
 
-  <!-- Popup -->
+  <!-- Enhanced Popup -->
   <div class="popup" id="popup">
     <div class="popup-content">
-      <h2>Detail Order</h2>
-      <p>Terimakasih telah membeli robux dari store kami :3 berikut detail order kamu</p>
-      <p><b>Username:</b> <span id="popupUsername"></span></p>
-      <p><b>Jumlah Robux:</b> <span id="popupRobux"></span></p>
-      <p><b>Price:</b> Rp <span id="popupHarga"></span></p>
-      <p><b>Tolong buat Game Pass Senilai:</b> <span id="popupGamepass"></span></p>
+      <h2>🎮 Detail Order 🎮</h2>
+      <p>Terimakasih telah membeli robux dari store kami 😊 berikut detail order kamu:</p>
+      <p><b>👤 Username:</b> <span id="popupUsername"></span></p>
+      <p><b>💰 Jumlah Robux:</b> <span id="popupRobux"></span></p>
+      <p><b>💸 Price:</b> Rp <span id="popupHarga"></span></p>
+      <p><b>🎯 Tolong buat Game Pass Senilai:</b> <span id="popupGamepass"></span></p>
       <p>Jika tidak tahu membuat game pass:<br>
-        <a href="https://youtu.be/PRO9QRvo4KA?si=Z5j_aFhdsHUMtemb" target="_blank">Tutorial Game Pass</a>
+        <a href="https://youtu.be/PRO9QRvo4KA?si=Z5j_aFhdsHUMtemb" target="_blank">📺 Tutorial Game Pass</a>
       </p>
       <div class="popup-buttons">
-        <button class="btn btn-cancel" onclick="closePopup()">Batal</button>
-        <button class="btn btn-confirm" onclick="kirimPesan()">Beli</button>
+        <button class="btn btn-cancel" onclick="closePopup()">❌ Batal</button>
+        <button class="btn btn-confirm" onclick="kirimPesan()">✅ Beli Sekarang</button>
       </div>
     </div>
   </div>
 
   <script>
+    // Sistem lama tetap sama
     let hargaPer100 = 15000;
     let diskon = 0;
 
@@ -353,11 +704,11 @@
       let result = document.getElementById("couponResult");
       if (kode === "RanggStore") {
         diskon = 0.02;
-        result.innerText = "Redeem Berhasil! Diskon 2% diterapkan.";
+        result.innerText = "🎉 Redeem Berhasil! Diskon 2% diterapkan.";
         result.style.color = "lightgreen";
       } else {
         diskon = 0;
-        result.innerText = "Kode salah";
+        result.innerText = "❌ Kode salah";
         result.style.color = "red";
       }
       hitungHarga();
@@ -375,7 +726,20 @@
       let totalHarga = document.getElementById("totalHarga").innerText;
 
       if (!username || !jumlah || !payment) {
-        alert("Harap isi semua data terlebih dahulu!");
+        // Animasi shake untuk form kosong
+        const inputs = [document.getElementById("username"), document.getElementById("jumlah")];
+        inputs.forEach(input => {
+          if (!input.value) {
+            input.style.animation = 'none';
+            input.offsetHeight; /* trigger reflow */
+            input.style.animation = 'shake 0.5s ease';
+          }
+        });
+        
+        setTimeout(() => {
+          inputs.forEach(input => input.style.animation = '');
+        }, 500);
+        
         return;
       }
 
@@ -392,6 +756,10 @@
       document.getElementById("popupGamepass").innerText = gamePass;
 
       document.getElementById("popup").classList.add("show");
+      
+      // Tambah efek suara (opsional)
+      const audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAZGF0YQQ=');
+      audio.play().catch(() => {});
     }
 
     function closePopup() {
@@ -413,54 +781,78 @@
       closePopup();
     }
 
-    // Dynamic Island text
- const texts = [
-      "Jika ada bug tolong lapor ke owner",
-      "Aman dan amanah",
-      "Dibuat dengan cinta",
-      "Harga mahal? boleh komplen ke admin :3"
+    // Enhanced Dynamic Island dengan animasi lebih smooth
+    const texts = [
+      "✨ Jika ada bug tolong lapor ke owner",
+      "🔒 Aman dan amanah",
+      "❤️ Dibuat dengan cinta",
+      "💬 Harga mahal? boleh komplen ke admin :3",
+      "⚡ Proses cepat & aman"
     ];
 
     const island = document.getElementById("dynamic-island");
     const textEl = document.getElementById("island-text");
 
-    const left = document.createElement("span");
-    const right = document.createElement("span");
-    island.prepend(left);
-    island.appendChild(right);
-
     let idx = 0;
 
     function updateIsland() {
-      textEl.innerText = texts[idx];
-      idx = (idx + 1) % texts.length;
-      animateCircles();
+      textEl.style.opacity = '0';
+      textEl.style.transform = 'translateY(10px)';
+      
+      setTimeout(() => {
+        textEl.innerText = texts[idx];
+        idx = (idx + 1) % texts.length;
+        
+        textEl.style.transition = 'all 0.5s ease';
+        textEl.style.opacity = '1';
+        textEl.style.transform = 'translateY(0)';
+        
+        // Animate circles
+        animateCircles();
+      }, 300);
     }
 
     function animateCircles() {
-      const frames = [
-        ["O", "o"],
-        ["o", "O"],
-        ["O", "O"],
-        ["o", "o"]
-      ];
-      let animStep = 0;
-
-      function frameStep() {
-        const frame = frames[animStep % frames.length];
-        left.innerText = frame[0] + " ";
-        right.innerText = " " + frame[1];
-        animStep++;
-        if (animStep < 8) {
-          setTimeout(frameStep, 300);
-        }
-      }
-      frameStep();
+      const circles = document.querySelectorAll('.island-circle');
+      circles.forEach((circle, i) => {
+        circle.style.animation = 'none';
+        setTimeout(() => {
+          circle.style.animation = `pulse 2s ${i * 0.3}s infinite ease-in-out`;
+        }, 10);
+      });
     }
 
-    // pertama kali jalan
+    // Initialize
     updateIsland();
-    setInterval(updateIsland, 10000);
+    setInterval(updateIsland, 7000);
+
+    // Floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.width = `${Math.random() * 3 + 1}px`;
+        particle.style.height = particle.style.width;
+        particle.style.animationDelay = `${Math.random() * 20}s`;
+        particle.style.animationDuration = `${Math.random() * 10 + 15}s`;
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    createParticles();
+
+    // Add shake animation for validation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
-</html>
+  </html>
