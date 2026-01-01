@@ -5,163 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RanggStore</title>
   <style>
+    /* Blue Gradient Glass Theme */
+    :root {
+      --blue-bg: linear-gradient(135deg, #0c3483 0%, #667eea 100%);
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
+      --primary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --primary-dark: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+      --secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --success: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+      --danger: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+      --warning: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', 'Inter', sans-serif;
+      background: var(--blue-bg);
+      color: var(--text-primary);
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
     
+    /* Header dengan blue gradient glass effect */
     header {
-      background: linear-gradient(135deg, rgba(255, 136, 0, 0.9), rgba(255, 85, 0, 0.9));
-      padding: 25px;
+      background: linear-gradient(135deg, rgba(76, 161, 175, 0.8) 0%, rgba(0, 140, 255, 0.8) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      padding: 20px 25px;
       text-align: center;
       font-size: 24px;
-      font-weight: 800;
-      border-bottom: 4px solid #ffbb33;
-      backdrop-filter: blur(10px);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       position: relative;
-      overflow: hidden;
-    }
-    
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: shimmer 3s infinite linear;
-    }
-    
-    @keyframes shimmer {
-      0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
-      100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     
     .container {
-      padding: 25px;
+      padding: 25px 20px;
       max-width: 900px;
       margin: auto;
     }
     
+    /* Stats dengan blue glassmorphism */
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin: 30px 0;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 25px 0;
     }
     
     .stat-box {
-      background: rgba(31, 31, 31, 0.7);
-      padding: 25px;
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 22px 18px;
+      border-radius: 18px;
       text-align: center;
       font-size: 20px;
-      font-weight: 800;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
+      font-weight: 700;
+      box-shadow: var(--glass-shadow);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      color: var(--text-primary);
       position: relative;
       overflow: hidden;
     }
     
     .stat-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(255, 85, 0, 0.3);
-      border-color: rgba(255, 136, 0, 0.3);
-    }
-    
-    .stat-box::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .stat-box:hover::before {
-      left: 100%;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(79, 172, 254, 0.3);
+      border-color: rgba(79, 172, 254, 0.4);
+      background: rgba(255, 255, 255, 0.15);
     }
     
     .stat-box span {
       display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-top: 8px;
-      color: #aaa;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 6px;
+      color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
     
+    /* Form card dengan blue glass effect */
     .form-card {
-      background: rgba(30, 30, 30, 0.85);
-      padding: 30px;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-      margin-bottom: 30px;
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: var(--glass-shadow);
+      margin-bottom: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .form-group {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
     
     label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 700;
-      color: #ffbb33;
-      font-size: 16px;
-      letter-spacing: 0.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 15px;
+      letter-spacing: -0.2px;
     }
     
     input, select {
       width: 100%;
-      padding: 16px;
+      padding: 14px 16px;
       border-radius: 12px;
-      border: 2px solid transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       outline: none;
       font-size: 16px;
-      background: rgba(43, 43, 43, 0.8);
-      color: #fff;
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    select option {
+      background: #1a2980;
+      color: white;
     }
     
     input:focus, select:focus {
-      border-color: #ff8800;
-      box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.2);
-      transform: translateY(-2px);
+      border-color: rgba(79, 172, 254, 0.8);
+      box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+      background: rgba(255, 255, 255, 0.15);
     }
     
+    /* Payment options - Blue gradient style */
     .payment-options {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
-      margin: 20px 0;
+      margin: 18px 0;
     }
     
     .payment-options label {
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: rgba(42, 42, 42, 0.8);
-      padding: 15px 25px;
-      border-radius: 16px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 14px 20px;
+      border-radius: 14px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       flex: 1;
-      min-width: 180px;
+      min-width: 150px;
       justify-content: center;
-      border: 2px solid transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 0;
     }
     
     .payment-options input {
@@ -169,34 +183,39 @@
     }
     
     .payment-options label.active {
-      background: linear-gradient(135deg, rgba(255, 136, 0, 0.9), rgba(255, 85, 0, 0.9));
-      border-color: #ffbb33;
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4);
+      background: var(--primary);
+      border-color: rgba(255, 255, 255, 0.4);
+      color: white;
+      transform: scale(1.02);
+      box-shadow: 0 6px 18px rgba(79, 172, 254, 0.4);
     }
     
     .payment-options label:hover:not(.active) {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      border-color: rgba(255, 136, 0, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border-color: rgba(79, 172, 254, 0.4);
+      background: rgba(255, 255, 255, 0.15);
     }
     
     .payment-options img {
-      height: 35px;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+      height: 28px;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
     }
     
+    /* Price box dengan blue gradient glass effect */
     .price-box {
-      background: linear-gradient(135deg, rgba(38, 38, 38, 0.9), rgba(50, 50, 50, 0.9));
-      padding: 25px;
-      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%);
+      backdrop-filter: blur(15px);
+      padding: 22px;
+      border-radius: 18px;
       text-align: center;
-      margin: 30px 0;
-      font-size: 24px;
-      font-weight: 800;
-      border: 2px solid rgba(255, 136, 0, 0.3);
+      margin: 25px 0;
+      font-size: 22px;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       position: relative;
       overflow: hidden;
+      color: var(--text-primary);
     }
     
     .price-box::before {
@@ -205,8 +224,8 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #ff8800, #ff5500, #ff8800);
+      height: 3px;
+      background: linear-gradient(90deg, #4facfe, #00f2fe, #4facfe);
       background-size: 200% 100%;
       animation: slide 2s linear infinite;
     }
@@ -216,186 +235,158 @@
       100% { background-position: -200% 0; }
     }
     
+    /* Button blue gradient style */
     .btn-buy {
       width: 100%;
-      background: linear-gradient(135deg, #ff8800, #ff5500);
-      padding: 20px;
+      background: var(--primary);
+      padding: 18px;
       border: none;
-      border-radius: 16px;
-      font-size: 20px;
-      font-weight: 800;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 700;
       cursor: pointer;
-      color: #fff;
+      color: white;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      letter-spacing: -0.3px;
+      text-transform: none;
       position: relative;
       overflow: hidden;
+      font-family: inherit;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .btn-buy:hover {
-      background: linear-gradient(135deg, #ff5500, #ff3300);
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(255, 85, 0, 0.5);
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
     }
     
     .btn-buy:active {
       transform: translateY(0);
     }
     
-    .btn-buy::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transform: rotate(45deg);
-      transition: all 0.5s ease;
-      opacity: 0;
-    }
-    
-    .btn-buy:hover::after {
-      animation: shine 1s ease;
-    }
-    
-    @keyframes shine {
-      0% { opacity: 0; left: -50%; }
-      50% { opacity: 1; }
-      100% { opacity: 0; left: 150%; }
-    }
-    
     footer {
-      background: rgba(26, 26, 26, 0.9);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       text-align: center;
-      padding: 25px;
-      font-size: 15px;
-      color: #aaa;
-      border-top: 2px solid rgba(255, 136, 0, 0.3);
-      backdrop-filter: blur(10px);
-      margin-top: 50px;
+      padding: 22px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      margin-top: 40px;
     }
     
     footer strong {
-      color: #ff8800;
-      font-weight: 800;
+      color: #4facfe;
+      font-weight: 700;
     }
 
-    /* Enhanced Dynamic Island */
+    /* Enhanced Dynamic Island - Blue gradient style */
     #dynamic-island {
       position: fixed;
-      top: 20px;
+      top: 16px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(31, 31, 31, 0.95);
-      padding: 14px 35px;
+      background: linear-gradient(135deg, rgba(79, 172, 254, 0.9) 0%, rgba(0, 242, 254, 0.9) 100%);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      padding: 10px 28px;
       border-radius: 100px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      font-size: 15px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      font-size: 14px;
       font-weight: 600;
-      color: #fff;
+      color: white;
       z-index: 1000;
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      min-width: 300px;
-      max-width: 400px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 280px;
+      max-width: 380px;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 15px;
-    }
-    
-    #dynamic-island::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(45deg, transparent, rgba(255, 136, 0, 0.1), transparent);
-      animation: islandShine 8s infinite linear;
-      border-radius: 100px;
-    }
-    
-    @keyframes islandShine {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+      gap: 12px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     #dynamic-island:hover {
-      transform: translateX(-50%) scale(1.05);
-      box-shadow: 0 15px 50px rgba(255, 85, 0, 0.3);
-      border-color: rgba(255, 136, 0, 0.4);
+      transform: translateX(-50%) scale(1.03);
+      box-shadow: 0 12px 30px rgba(79, 172, 254, 0.3);
     }
     
     .island-circle {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #ff8800, #ff5500);
+      background: white;
       position: relative;
       animation: pulse 2s infinite ease-in-out;
       flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
     }
     
     @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.2); opacity: 1; }
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
     }
     
     #island-text {
       position: relative;
       z-index: 2;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       flex: 1;
       text-align: center;
     }
     
     /* Enhanced Coupon */
     .coupon-box {
-      margin-top: 25px;
-      background: linear-gradient(135deg, rgba(38, 38, 38, 0.9), rgba(50, 50, 50, 0.9));
-      padding: 20px;
-      border-radius: 20px;
-      border: 2px dashed rgba(255, 136, 0, 0.3);
+      margin-top: 22px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px dashed rgba(79, 172, 254, 0.4);
     }
     
     .coupon-box input {
       width: 70%;
       display: inline-block;
-      margin-right: 10px;
+      margin-right: 8px;
     }
     
     .coupon-box button {
       width: 25%;
       display: inline-block;
-      background: linear-gradient(135deg, #ff8800, #ff5500);
-      color: #fff;
-      font-weight: 700;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
       cursor: pointer;
       border: none;
-      border-radius: 12px;
-      padding: 16px;
-      transition: all 0.3s ease;
-      letter-spacing: 0.5px;
+      border-radius: 10px;
+      padding: 14px;
+      transition: all 0.2s ease;
+      letter-spacing: 0.3px;
+      font-family: inherit;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .coupon-box button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+      background: var(--primary-dark);
     }
     
     .coupon-result {
-      margin-top: 15px;
-      font-size: 15px;
+      margin-top: 12px;
+      font-size: 14px;
       font-weight: 600;
       padding: 10px;
       border-radius: 10px;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.1);
       text-align: center;
     }
 
-    /* Enhanced Popup */
+    /* Enhanced Popup - Blue glass style */
     .popup {
       display: none;
       position: fixed;
@@ -403,156 +394,125 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       justify-content: center;
       align-items: center;
       z-index: 9999;
       opacity: 0;
-      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(10px);
+      transition: opacity 0.3s ease;
     }
     
     .popup.show {
       display: flex;
       opacity: 1;
-      animation: fadeIn 0.5s ease;
+      animation: fadeIn 0.3s ease;
     }
     
     .popup-content {
-      background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(40, 40, 40, 0.95));
-      padding: 40px;
-      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      padding: 32px;
+      border-radius: 24px;
       width: 90%;
-      max-width: 500px;
+      max-width: 480px;
       text-align: left;
-      color: #fff;
-      box-shadow: 0 30px 100px rgba(255, 85, 0, 0.3);
-      border: 1px solid rgba(255, 136, 0, 0.3);
-      transform: translateY(100px) scale(0.8);
-      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
+      color: var(--text-primary);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: translateY(30px) scale(0.95);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .popup.show .popup-content {
       transform: translateY(0) scale(1);
     }
     
-    .popup-content::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, #ff8800, #ff5500, #ff8800);
-      z-index: -1;
-      border-radius: 32px;
-      opacity: 0.3;
-      animation: rotate 3s linear infinite;
-    }
-    
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
     .popup-content h2 {
       margin-top: 0;
-      color: #ffbb33;
-      font-size: 28px;
-      font-weight: 800;
+      color: var(--text-primary);
+      font-size: 24px;
+      font-weight: 700;
       text-align: center;
-      margin-bottom: 25px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     
     .popup-content p {
-      margin-bottom: 15px;
+      margin-bottom: 14px;
       line-height: 1.6;
-      font-size: 16px;
+      font-size: 15px;
+      color: var(--text-secondary);
     }
     
     .popup-content b {
-      color: #ffbb33;
+      color: var(--text-primary);
     }
     
     .popup-content a {
-      color: #00aaff;
+      color: #4facfe;
       text-decoration: none;
       font-weight: 600;
-      transition: all 0.3s ease;
-      position: relative;
+      transition: all 0.2s ease;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .popup-content a:hover {
-      color: #ff8800;
+      color: #00f2fe;
       text-decoration: underline;
     }
     
     .popup-buttons {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
+      gap: 16px;
+      margin-top: 25px;
     }
     
     .btn {
-      padding: 15px 35px;
+      padding: 14px 28px;
       border: none;
-      border-radius: 16px;
+      border-radius: 14px;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      min-width: 140px;
-      letter-spacing: 0.5px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 120px;
+      letter-spacing: -0.2px;
       position: relative;
       overflow: hidden;
-    }
-    
-    .btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .btn:hover::after {
-      left: 100%;
+      font-family: inherit;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .btn-cancel {
-      background: rgba(68, 68, 68, 0.8);
-      color: #fff;
-      border: 2px solid transparent;
+      background: rgba(142, 142, 147, 0.3);
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .btn-cancel:hover {
-      background: rgba(88, 88, 88, 0.9);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(142, 142, 147, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     }
     
     .btn-confirm {
-      background: linear-gradient(135deg, #ff8800, #ff5500);
-      color: #fff;
-      border: 2px solid transparent;
+      background: var(--primary);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
     
     .btn-confirm:hover {
-      background: linear-gradient(135deg, #ff5500, #ff3300);
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(255, 85, 0, 0.5);
-      border-color: rgba(255, 187, 51, 0.5);
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
     }
 
-    /* Floating particles */
+    /* Floating particles - Blue theme */
     .particles {
       position: fixed;
       top: 0;
@@ -567,9 +527,10 @@
       position: absolute;
       width: 2px;
       height: 2px;
-      background: rgba(255, 136, 0, 0.5);
+      background: rgba(79, 172, 254, 0.5);
       border-radius: 50%;
       animation: float 20s infinite linear;
+      box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
     }
     
     @keyframes float {
@@ -593,129 +554,143 @@
     .opsi-lainnya-section {
       margin-top: 20px;
       text-align: center;
+      padding: 15px 0;
     }
     
     .opsi-lainnya-text {
-      color: #aaa;
+      color: var(--text-secondary);
       font-size: 14px;
       margin-bottom: 10px;
     }
     
     .opsi-lainnya-btn {
       background: transparent;
-      border: 2px solid #ff8800;
-      color: #ff8800;
-      padding: 12px 30px;
+      border: 1.5px solid rgba(79, 172, 254, 0.8);
+      color: #4facfe;
+      padding: 12px 28px;
       border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
       display: inline-block;
-      margin: 10px 0;
+      margin: 8px 0;
+      font-family: inherit;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .opsi-lainnya-btn:hover {
-      background: rgba(255, 136, 0, 0.1);
+      background: rgba(79, 172, 254, 0.2);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
     }
 
     /* Opsi Lainnya Popup */
     .opsi-popup-content {
-      max-width: 600px;
+      max-width: 520px;
       width: 90%;
     }
     
     .opsi-options {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin: 30px 0;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 25px 0;
     }
     
     .opsi-card {
-      background: rgba(50, 50, 50, 0.8);
-      border-radius: 20px;
-      padding: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 18px;
+      padding: 22px;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s ease;
-      border: 2px solid transparent;
-      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .opsi-card:hover {
-      transform: translateY(-5px);
-      border-color: #ff8800;
-      box-shadow: 0 10px 30px rgba(255, 136, 0, 0.3);
+      transform: translateY(-4px);
+      border-color: rgba(79, 172, 254, 0.6);
+      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+      background: rgba(255, 255, 255, 0.15);
     }
     
     .opsi-card h3 {
-      color: #ffbb33;
-      margin-top: 15px;
-      font-size: 22px;
+      color: var(--text-primary);
+      margin-top: 12px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    .opsi-card p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-top: 4px;
     }
     
     .opsi-icon {
-      font-size: 50px;
-      margin-bottom: 15px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      font-size: 42px;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     
-    /* Fish It Form */
+    /* Fish It Form - Tanpa password */
     .fish-form {
       margin-top: 20px;
     }
     
     .duration-options {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin: 20px 0;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
     }
     
     .duration-card {
-      background: rgba(40, 40, 40, 0.8);
-      border-radius: 15px;
-      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 18px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
     }
     
     .duration-card.active {
-      border-color: #ff8800;
-      background: linear-gradient(135deg, rgba(255, 136, 0, 0.2), rgba(255, 85, 0, 0.2));
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(255, 85, 0, 0.3);
+      border-color: rgba(79, 172, 254, 0.8);
+      background: rgba(79, 172, 254, 0.2);
+      transform: scale(1.02);
+      box-shadow: 0 6px 18px rgba(79, 172, 254, 0.3);
     }
     
     .duration-card:hover {
-      border-color: #ffbb33;
-      transform: translateY(-3px);
+      border-color: rgba(79, 172, 254, 0.6);
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.15);
     }
     
     .duration-price {
-      color: #ff8800;
-      font-size: 20px;
+      color: #4facfe;
+      font-size: 18px;
       font-weight: 700;
-      margin-top: 10px;
+      margin-top: 8px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .duration-time {
-      color: #aaa;
-      font-size: 14px;
+      color: var(--text-secondary);
+      font-size: 13px;
     }
     
     .benefits {
-      background: linear-gradient(135deg, rgba(38, 38, 38, 0.9), rgba(50, 50, 50, 0.9));
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
-      border: 2px solid rgba(76, 175, 80, 0.3);
+      background: rgba(86, 171, 47, 0.2);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 18px 0;
+      border: 1px solid rgba(86, 171, 47, 0.3);
+      backdrop-filter: blur(10px);
     }
     
     .benefit-item {
@@ -723,104 +698,76 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 10px;
-      color: #4CAF50;
+      color: #a8e063;
+      font-size: 14px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .rules {
-      background: linear-gradient(135deg, rgba(255, 87, 87, 0.1), rgba(255, 0, 0, 0.1));
-      border: 2px solid #ff5555;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
+      background: rgba(255, 65, 108, 0.2);
+      border: 1px solid rgba(255, 65, 108, 0.3);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 18px 0;
       backdrop-filter: blur(10px);
     }
     
     .rules h4 {
-      color: #ff5555;
+      color: #ff416c;
       margin-top: 0;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      font-size: 16px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .rule-item {
       margin-bottom: 8px;
-      color: #ffaaaa;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
     }
     
     .fish-popup-buttons {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       justify-content: center;
-      margin-top: 30px;
+      margin-top: 25px;
     }
     
-    /* Password Field */
-    .password-group {
-      position: relative;
-      margin-bottom: 24px;
-    }
-
-    .toggle-password {
-      position: absolute;
-      right: 12px;
-      top: 45px;
-      background: rgba(255, 136, 0, 0.2);
-      border: 2px solid #ff8800;
-      color: #ffbb33;
-      cursor: pointer;
-      font-size: 12px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      font-weight: 600;
-    }
-
-    .toggle-password:hover {
-      background: rgba(255, 136, 0, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .warning-text {
-      font-size: 12px;
-      color: #ffbb33;
-      margin-top: 5px;
-      font-style: italic;
-      opacity: 0.9;
-    }
-
     .secure-badge {
       display: inline-block;
-      background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(56, 142, 60, 0.2));
-      color: #4CAF50;
+      background: rgba(86, 171, 47, 0.3);
+      color: #a8e063;
       padding: 4px 10px;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 11px;
-      margin-left: 10px;
+      margin-left: 8px;
       font-weight: 600;
-      border: 1px solid rgba(76, 175, 80, 0.3);
+      border: 1px solid rgba(86, 171, 47, 0.4);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
-
+    
     .trust-text {
       text-align: center;
-      font-size: 12px;
-      color: #ffbb33;
+      font-size: 13px;
+      color: #ffd200;
       margin-top: 10px;
-      font-style: italic;
-      opacity: 0.8;
-      background: rgba(255, 136, 0, 0.1);
-      padding: 8px;
-      border-radius: 8px;
+      background: rgba(247, 151, 30, 0.2);
+      padding: 10px;
+      border-radius: 10px;
       margin-bottom: 20px;
+      border: 1px solid rgba(247, 151, 30, 0.3);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
-
+    
     /* Fish Order Popup */
     .order-details {
-      background: rgba(40, 40, 40, 0.8);
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
-      border: 2px solid rgba(255, 136, 0, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 18px 0;
+      border: 1px solid rgba(79, 172, 254, 0.3);
+      backdrop-filter: blur(10px);
     }
-
+    
     .order-detail-item {
       display: flex;
       justify-content: space-between;
@@ -828,24 +775,114 @@
       padding-bottom: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-
+    
     .order-detail-item:last-child {
       border-bottom: none;
     }
-
+    
     .order-label {
-      color: #aaa;
+      color: var(--text-secondary);
+      font-size: 14px;
     }
-
+    
     .order-value {
-      color: #ffbb33;
+      color: var(--text-primary);
       font-weight: 600;
+      font-size: 14px;
     }
-
+    
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Responsive fixes untuk mobile */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 16px;
+      }
+      
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      
+      .stat-box {
+        padding: 18px 12px;
+        font-size: 18px;
+      }
+      
+      .form-card {
+        padding: 22px 18px;
+      }
+      
+      .payment-options label {
+        min-width: calc(50% - 6px);
+        padding: 12px 16px;
+      }
+      
+      .coupon-box input {
+        width: 65%;
+      }
+      
+      .coupon-box button {
+        width: 30%;
+        padding: 12px;
+      }
+      
+      .price-box {
+        padding: 18px;
+        font-size: 20px;
+      }
+      
+      .opsi-options {
+        grid-template-columns: 1fr;
+      }
+      
+      .duration-options {
+        grid-template-columns: 1fr;
+      }
+      
+      #dynamic-island {
+        min-width: 260px;
+        max-width: 300px;
+        padding: 8px 20px;
+        font-size: 13px;
+      }
+      
+      .popup-content {
+        padding: 24px 20px;
+        border-radius: 20px;
+      }
+      
+      .popup-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .payment-options label {
+        min-width: 100%;
+      }
+      
+      .coupon-box input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      
+      .coupon-box button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -866,10 +903,10 @@
 
   <div class="container">
     <div class="stats">
-      <div class="stat-box">3000 <span>Available Stock</span></div>
+      <div class="stat-box"> ReStock <span>Available Stock</span></div>
       <div class="stat-box">Rp 15.000 / 100 R$ <span>Price</span></div>
       <div class="stat-box">200 R$ <span>Minimum Purchase</span></div>
-      <div class="stat-box">70 <span>Total Order</span></div>
+      <div class="stat-box">150 <span>Total Order</span></div>
     </div>
 
     <div class="form-card">
@@ -918,7 +955,7 @@
         </div>
       </div>
 
-      <!-- Opsi Lainnya Section -->
+      <!-- Opsi Lainnya Section - Fixed untuk responsif -->
       <div class="opsi-lainnya-section">
         <div class="opsi-lainnya-text">Mau coba opsi lainnya?</div>
         <button class="opsi-lainnya-btn" onclick="showOpsiPopup()">Opsi Lainnya</button>
@@ -943,7 +980,7 @@
       <p><b>💸 Price:</b> Rp <span id="popupHarga"></span></p>
       <p><b>🎯 Tolong buat Game Pass Senilai:</b> <span id="popupGamepass"></span></p>
       <p>Jika tidak tahu membuat game pass:<br>
-        <a href="https://youtu.be/PRO9QRvo4KA?si=Z5j_aFhdsHUMtemb" target="_blank">📺 Tutorial Game Pass</a>
+        <a href="https://youtu.be/PRO9QRvo4KA?si=Z5j_aFhdsHUMtemb" target="_blank">📺 Tutorial membuat Game Pass</a>
       </p>
       <div class="popup-buttons">
         <button class="btn btn-cancel" onclick="closePopup()">❌ Batal</button>
@@ -952,7 +989,7 @@
     </div>
   </div>
 
-  <!-- Opsi Lainnya Popup -->
+  <!-- Opsi Lainnya Popup - Fixed untuk responsif -->
   <div class="popup" id="opsiPopup">
     <div class="popup-content opsi-popup-content">
       <h2>🎮 RanggStore 🎮</h2>
@@ -977,7 +1014,6 @@
     </div>
   </div>
 
-  <!-- Fish It Form Popup -->
   <div class="popup" id="fishPopup">
     <div class="popup-content">
       <h2>🎣 Joki AFK Fish It 🎣</h2>
@@ -986,13 +1022,6 @@
         <div class="form-group">
           <label for="fishUsername">Nama Roblox <span class="secure-badge">🔐 Aman</span></label>
           <input type="text" id="fishUsername" placeholder="Masukkan Username Roblox">
-        </div>
-        
-        <div class="password-group">
-          <label for="fishPassword">Password <span class="secure-badge">⚠️ Rahasia</span></label>
-          <input type="password" id="fishPassword" placeholder="Masukkan Password Roblox">
-          <button type="button" class="toggle-password" onclick="togglePassword()">👁️ Tampilkan</button>
-          <div class="warning-text">Password hanya digunakan untuk login saat joki berlangsung dan akan dihapus setelah selesai</div>
         </div>
         
         <div class="form-group">
@@ -1023,6 +1052,7 @@
           <div class="rule-item">• Jangan login ke dalam akun saat proses joki berlangsung</div>
           <div class="rule-item">• Jika admin meminta code login, harap langsung di respon</div>
           <div class="rule-item">• Password akan dihapus dari sistem kami setelah joki selesai</div>
+          <div class="rule-item">• Dilarang log in ke akun yg sedang di joki</div>
         </div>
         
         <div class="fish-popup-buttons">
@@ -1043,10 +1073,6 @@
         <div class="order-detail-item">
           <span class="order-label">👤 Username:</span>
           <span class="order-value" id="orderFishUsername"></span>
-        </div>
-        <div class="order-detail-item">
-          <span class="order-label">🔑 Password:</span>
-          <span class="order-value" id="orderFishPassword"></span>
         </div>
         <div class="order-detail-item">
           <span class="order-label">⏰ Durasi:</span>
@@ -1099,11 +1125,13 @@
       if (kode === "RanggStore") {
         diskon = 0.02;
         result.innerText = "🎉 Redeem Berhasil! Diskon 2% diterapkan.";
-        result.style.color = "lightgreen";
+        result.style.color = "#a8e063";
+        result.style.background = "rgba(86, 171, 47, 0.2)";
       } else {
         diskon = 0;
         result.innerText = "❌ Kode salah";
-        result.style.color = "red";
+        result.style.color = "#ff416c";
+        result.style.background = "rgba(255, 65, 108, 0.2)";
       }
       hitungHarga();
     }
@@ -1127,11 +1155,15 @@
             input.style.animation = 'none';
             input.offsetHeight; /* trigger reflow */
             input.style.animation = 'shake 0.5s ease';
+            input.style.borderColor = '#ff416c';
           }
         });
         
         setTimeout(() => {
-          inputs.forEach(input => input.style.animation = '');
+          inputs.forEach(input => {
+            input.style.animation = '';
+            input.style.borderColor = '';
+          });
         }, 500);
         
         return;
@@ -1173,8 +1205,7 @@
 
     // Enhanced Dynamic Island dengan animasi lebih smooth
     const texts = [
-      
-      "📌 Harap gunakan situs desktop",
+      "📌 Harap gunakan situs desktop untuk pengalaman lebh baik",
       "✨ Jika ada bug di web tolong lapor ke owner",
       "🔒 Aman dan amanah",
       "❤️ Dibuat dengan cinta🤭",
@@ -1192,19 +1223,19 @@
 
     function updateIsland() {
       textEl.style.opacity = '0';
-      textEl.style.transform = 'translateY(10px)';
+      textEl.style.transform = 'translateY(8px)';
       
       setTimeout(() => {
         textEl.innerText = texts[idx];
         idx = (idx + 1) % texts.length;
         
-        textEl.style.transition = 'all 0.5s ease';
+        textEl.style.transition = 'all 0.3s ease';
         textEl.style.opacity = '1';
         textEl.style.transform = 'translateY(0)';
         
         // Animate circles
         animateCircles();
-      }, 300);
+      }, 200);
     }
 
     function animateCircles() {
@@ -1224,11 +1255,11 @@
     // Floating particles
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 40; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.left = `${Math.random() * 100}%`;
-        particle.style.width = `${Math.random() * 3 + 1}px`;
+        particle.style.width = `${Math.random() * 2 + 1}px`;
         particle.style.height = particle.style.width;
         particle.style.animationDelay = `${Math.random() * 20}s`;
         particle.style.animationDuration = `${Math.random() * 10 + 15}s`;
@@ -1272,22 +1303,6 @@
       }
     }
 
-    // Fungsi toggle password visibility
-    function togglePassword() {
-      const passwordInput = document.getElementById('fishPassword');
-      const toggleButton = document.querySelector('.toggle-password');
-      
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleButton.innerHTML = '👁️‍🗨️ Sembunyikan';
-        toggleButton.style.background = 'rgba(255, 85, 0, 0.3)';
-      } else {
-        passwordInput.type = 'password';
-        toggleButton.innerHTML = '👁️ Tampilkan';
-        toggleButton.style.background = 'rgba(255, 136, 0, 0.2)';
-      }
-    }
-
     function selectFishPayment(id) {
       document.querySelectorAll('#fishOrderPopup .payment-options label').forEach(l => l.classList.remove("active"));
       document.getElementById(id).classList.add("active");
@@ -1296,41 +1311,28 @@
 
     function showFishOrderPopup() {
       let username = document.getElementById("fishUsername").value;
-      let password = document.getElementById("fishPassword").value;
       
-      if (!username || !password) {
+      if (!username) {
         // Animasi shake untuk form kosong
-        const inputs = [document.getElementById("fishUsername"), document.getElementById("fishPassword")];
-        inputs.forEach(input => {
-          if (!input.value) {
-            input.style.animation = 'none';
-            input.offsetHeight;
-            input.style.animation = 'shake 0.5s ease';
-            input.style.borderColor = '#ff5555';
-          }
-        });
+        const input = document.getElementById("fishUsername");
+        input.style.animation = 'none';
+        input.offsetHeight;
+        input.style.animation = 'shake 0.5s ease';
+        input.style.borderColor = '#ff416c';
         
         setTimeout(() => {
-          inputs.forEach(input => {
-            input.style.animation = '';
-            input.style.borderColor = '';
-          });
+          input.style.animation = '';
+          input.style.borderColor = '';
         }, 500);
         
-        alert("Harap masukkan username dan password Roblox!");
+        alert("Harap masukkan username Roblox!");
         return;
       }
       
       let durasi = selectedDuration === '24jam' ? '24 Jam' : '7 Hari';
       let harga = selectedDuration === '24jam' ? '8.000' : '20.000';
       
-      // Tampilkan password yang disamarkan untuk preview
-      let maskedPassword = password.length > 3 ? 
-        password.substring(0, 3) + '•••••' : 
-        '•••••';
-      
       document.getElementById("orderFishUsername").innerText = username;
-      document.getElementById("orderFishPassword").innerText = maskedPassword;
       document.getElementById("orderFishDurasi").innerText = durasi;
       document.getElementById("orderFishHarga").innerText = harga;
       
@@ -1344,7 +1346,6 @@
 
     function kirimPesanFish() {
       let username = document.getElementById("fishUsername").value;
-      let password = document.getElementById("fishPassword").value;
       let durasi = selectedDuration === '24jam' ? '24 Jam' : '7 Hari';
       let harga = selectedDuration === '24jam' ? '8.000' : '20.000';
       
@@ -1353,8 +1354,8 @@
         return;
       }
       
-      // Format pesan WhatsApp dengan password
-      let pesan = `Joki afk Fish it%0A====================%0AUsername: ${username}%0APassword: ${password}%0ABerapa Lama joki: ${durasi}%0APayment: ${selectedFishPayment}%0ATotal: Rp ${harga}%0A====================%0ARanggStore`;
+      // Format pesan WhatsApp tanpa password
+      let pesan = `Joki afk Fish it%0A====================%0AUsername: ${username}%0ABerapa Lama joki: ${durasi}%0APayment: ${selectedFishPayment}%0ATotal: Rp ${harga}%0A====================%0ARanggStore`;
       
       let nomorAdmin = "6283846078733"; 
       let url = `https://wa.me/${nomorAdmin}?text=${pesan}`;
@@ -1362,7 +1363,6 @@
       
       // Clear form setelah mengirim
       document.getElementById("fishUsername").value = '';
-      document.getElementById("fishPassword").value = '';
       
       closeFishOrderPopup();
       closeFishPopup();
@@ -1389,6 +1389,24 @@
     
     // Initialize fish form
     selectDuration('24jam');
+    
+    // Responsive check untuk dynamic island
+    function checkResponsive() {
+      if (window.innerWidth <= 768) {
+        island.style.fontSize = '13px';
+        island.style.padding = '8px 20px';
+        island.style.minWidth = '260px';
+        island.style.maxWidth = '300px';
+      } else {
+        island.style.fontSize = '14px';
+        island.style.padding = '10px 28px';
+        island.style.minWidth = '280px';
+        island.style.maxWidth = '380px';
+      }
+    }
+    
+    window.addEventListener('resize', checkResponsive);
+    checkResponsive(); // Initial check
   </script>
 </body>
 </html>
