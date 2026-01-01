@@ -19,6 +19,10 @@
       --success: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
       --danger: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
       --warning: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+      --wheel-gold: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      --wheel-silver: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+      --wheel-bronze: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
+      --wheel-lose: linear-gradient(135deg, #666666 0%, #333333 100%);
     }
 
     * {
@@ -585,15 +589,15 @@
       box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
     }
 
-    /* Opsi Lainnya Popup */
+    /* Opsi Lainnya Popup - Updated for 3 options */
     .opsi-popup-content {
-      max-width: 520px;
+      max-width: 600px;
       width: 90%;
     }
     
     .opsi-options {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
       margin: 25px 0;
     }
@@ -607,6 +611,11 @@
       cursor: pointer;
       transition: all 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.2);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     
     .opsi-card:hover {
@@ -634,7 +643,7 @@
       margin-bottom: 12px;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    
+
     /* Fish It Form - Grid Layout dan Accordion */
     .fish-form {
       margin-top: 20px;
@@ -851,10 +860,198 @@
       transform: scale(1.1);
     }
     
+    /* Spin Wheel Popup Styles */
+    .wheel-popup-content {
+      max-width: 500px;
+      text-align: center;
+    }
+    
+    .wheel-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto 25px;
+    }
+    
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      border: 8px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      transition: transform 3s cubic-bezier(0.2, 0.8, 0.3, 1);
+    }
+    
+    .wheel-item {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      transform-origin: bottom right;
+      left: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    
+    .wheel-item span {
+      transform: rotate(45deg);
+      text-align: center;
+      width: 100%;
+      padding-left: 40px;
+      font-size: 14px;
+    }
+    
+    .wheel-pointer {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      z-index: 10;
+    }
+    
+    .wheel-pointer::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 30px solid #ff416c;
+      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
+    }
+    
+    .spin-btn {
+      background: var(--warning);
+      color: #333;
+      border: none;
+      padding: 15px 40px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .spin-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(247, 151, 30, 0.4);
+    }
+    
+    .spin-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .wheel-result {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .result-code {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 5px;
+      margin: 10px 0;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .result-timer {
+      font-size: 14px;
+      color: #ffd200;
+      margin-top: 10px;
+    }
+    
+    /* Spin Limits & Cooldown Display */
+    .spin-limits {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 15px 0;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    
+    .spin-counter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .spin-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 5px;
+    }
+    
+    .spin-count {
+      font-size: 20px;
+      font-weight: 700;
+      color: #4facfe;
+    }
+    
+    .cooldown-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(255, 65, 108, 0.2);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 65, 108, 0.3);
+    }
+    
+    .cooldown-label {
+      font-size: 12px;
+      color: #ff416c;
+      margin-bottom: 5px;
+    }
+    
+    .cooldown-timer {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffd200;
+    }
+    
+    .wheel-probability {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      background: rgba(0, 0, 0, 0.1);
+      padding: 12px;
+      border-radius: 10px;
+    }
+    
+    .probability-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    
     /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     
     /* Responsive fixes untuk mobile */
@@ -904,6 +1101,11 @@
         grid-template-columns: 1fr;
       }
       
+      .wheel-container {
+        width: 250px;
+        height: 250px;
+      }
+      
       #dynamic-island {
         min-width: 260px;
         max-width: 300px;
@@ -924,6 +1126,11 @@
       .btn {
         width: 100%;
       }
+      
+      .spin-limits {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
     
     @media (max-width: 480px) {
@@ -942,6 +1149,11 @@
       
       .coupon-box button {
         width: 100%;
+      }
+      
+      .wheel-container {
+        width: 220px;
+        height: 220px;
       }
     }
   </style>
@@ -963,7 +1175,7 @@
 
   <div class="container">
     <div class="stats">
-      <div class="stat-box">ReStock Soon<span>Available Stock</span></div>
+      <div class="stat-box">ReStock Soon... <span>Available Stock</span></div>
       <div class="stat-box">Rp 15.000 / 100 R$ <span>Price</span></div>
       <div class="stat-box">200 R$ <span>Minimum Purchase</span></div>
       <div class="stat-box">150 <span>Total Order</span></div>
@@ -1049,7 +1261,7 @@
     </div>
   </div>
 
-  <!-- Opsi Lainnya Popup - Fixed untuk responsif -->
+  <!-- Opsi Lainnya Popup - Updated dengan 3 opsi -->
   <div class="popup" id="opsiPopup">
     <div class="popup-content opsi-popup-content">
       <h2>🎮 RanggStore 🎮</h2>
@@ -1065,6 +1277,11 @@
           <div class="opsi-icon">⛏️</div>
           <h3>Minecraft</h3>
           <p>Beli Akun Minecraft</p>
+        </div>
+        <div class="opsi-card" onclick="showSpinWheel()">
+          <div class="opsi-icon">🎡</div>
+          <h3>Spin Wheel</h3>
+          <p>Dapatkan Kode Diskon</p>
         </div>
       </div>
       
@@ -1118,7 +1335,7 @@
           <div class="accordion-content" id="benefits">
             <div class="benefit-item">✓ Bebas pilih spot mancing di mana saja</div>
             <div class="benefit-item">✓ Ikan hasil tangkapan tidak akan diambil</div>
-            <div class="benefit-item">✓ Anti Hackback</div>
+            <div class="benefit-item">✓ Anti HackBack</div>
           </div>
         </div>
         
@@ -1133,7 +1350,6 @@
             <div class="rule-item">• Jika admin meminta kode verifikasi, harap langsung direspon</div>
             <div class="rule-item">• Proses joki dimulai setelah pembayaran dikonfirmasi</div>
             <div class="rule-item">• Tidak bisa refund setelah proses joki dimulai</div>
-            <div class="rule-item">• Dilarang log in/tabrak akun dalam proses jokian</div>
           </div>
         </div>
         
@@ -1187,10 +1403,203 @@
     </div>
   </div>
 
+  <!-- Spin Wheel Popup -->
+  <div class="popup" id="spinWheelPopup">
+    <div class="popup-content wheel-popup-content">
+      <button class="close-btn" onclick="closeSpinWheelPopup()">×</button>
+      <h2>🎡 Spin Wheel Diskon 🎡</h2>
+      <p>Putar roda untuk mendapatkan kode diskon acak!</p>
+      
+      <div class="spin-limits">
+        <div class="spin-counter">
+          <div class="spin-label">Sisa Spin Hari Ini</div>
+          <div class="spin-count" id="remainingSpins">3</div>
+        </div>
+        <div class="cooldown-info" id="cooldownInfo" style="display: none;">
+          <div class="cooldown-label">Cooldown</div>
+          <div class="cooldown-timer" id="cooldownTimer">12s</div>
+        </div>
+      </div>
+      
+      <div class="wheel-container">
+        <div class="wheel-pointer"></div>
+        <div class="wheel" id="wheel">
+          <!-- Wheel items akan diisi oleh JavaScript -->
+        </div>
+      </div>
+      
+      <button class="spin-btn" id="spinBtn" onclick="spinWheel()">🎯 PUTAR RODA!</button>
+      
+      <div class="wheel-probability">
+        <div class="probability-item">
+          <span>🎖️ 5% Diskon</span>
+          <span>5% chance</span>
+        </div>
+        <div class="probability-item">
+          <span>🥈 2% Diskon</span>
+          <span>2% chance</span>
+        </div>
+        <div class="probability-item">
+          <span>🥉 1.5% Diskon</span>
+          <span>1.5% chance</span>
+        </div>
+        <div class="probability-item">
+          <span>💀 ZONK</span>
+          <span>91.5% chance</span>
+        </div>
+      </div>
+      
+      <div class="wheel-result" id="wheelResult" style="display: none;">
+        <h3>🎉 SELAMAT! 🎉</h3>
+        <p>Kamu mendapatkan: <span id="resultPrize"></span></p>
+        <div class="result-code" id="resultCode"></div>
+        <p>Kode ini berlaku selama: <span class="result-timer" id="resultTimer">03:00</span></p>
+        <p>Salin kode di atas dan gunakan di form kupon!</p>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Sistem lama tetap sama
     let hargaPer100 = 15000;
     let diskon = 0;
+    let activeCoupons = []; // Array untuk menyimpan kode diskon aktif
+    
+    // Sistem Spin Limit & Cooldown
+    let spinData = {
+      remainingSpins: 3,
+      lastSpinTime: 0,
+      cooldownEndTime: 0
+    };
+    
+    // Load spin data dari localStorage
+    function loadSpinData() {
+      const savedData = localStorage.getItem('ranggstore_spin_data');
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        
+        // Reset spin setiap hari
+        const today = new Date().toDateString();
+        const lastSpinDate = parsedData.lastSpinDate ? new Date(parsedData.lastSpinDate).toDateString() : null;
+        
+        if (lastSpinDate !== today) {
+          spinData = {
+            remainingSpins: 3,
+            lastSpinTime: 0,
+            cooldownEndTime: 0,
+            lastSpinDate: today
+          };
+        } else {
+          spinData = parsedData;
+        }
+      } else {
+        spinData = {
+          remainingSpins: 3,
+          lastSpinTime: 0,
+          cooldownEndTime: 0,
+          lastSpinDate: new Date().toDateString()
+        };
+      }
+      
+      updateSpinDisplay();
+      updateCooldown();
+    }
+    
+    function saveSpinData() {
+      localStorage.setItem('ranggstore_spin_data', JSON.stringify(spinData));
+    }
+    
+    // Update display spin count
+    function updateSpinDisplay() {
+      const remainingSpinsElement = document.getElementById('remainingSpins');
+      if (remainingSpinsElement) {
+        remainingSpinsElement.textContent = spinData.remainingSpins;
+      }
+    }
+    
+    // Update cooldown display
+    function updateCooldown() {
+      const now = Date.now();
+      const cooldownInfo = document.getElementById('cooldownInfo');
+      const cooldownTimer = document.getElementById('cooldownTimer');
+      const spinBtn = document.getElementById('spinBtn');
+      
+      if (spinData.cooldownEndTime > now) {
+        // Masih dalam cooldown
+        const remainingTime = Math.ceil((spinData.cooldownEndTime - now) / 1000);
+        
+        if (cooldownInfo) cooldownInfo.style.display = 'flex';
+        if (cooldownTimer) cooldownTimer.textContent = `${remainingTime}s`;
+        
+        if (spinBtn) {
+          spinBtn.disabled = true;
+          spinBtn.innerHTML = `⏳ TUNGGU ${remainingTime}s`;
+        }
+      } else {
+        // Cooldown selesai
+        if (cooldownInfo) cooldownInfo.style.display = 'none';
+        
+        if (spinBtn) {
+          spinBtn.disabled = spinData.remainingSpins <= 0;
+          spinBtn.innerHTML = spinData.remainingSpins > 0 ? '🎯 PUTAR RODA!' : '🚫 SPIN HABIS';
+        }
+      }
+    }
+    
+    // Start cooldown timer
+    function startCooldown() {
+      spinData.cooldownEndTime = Date.now() + 12000; // 12 detik
+      spinData.lastSpinTime = Date.now();
+      saveSpinData();
+      
+      // Update display setiap detik
+      const cooldownInterval = setInterval(() => {
+        updateCooldown();
+        
+        if (Date.now() >= spinData.cooldownEndTime) {
+          clearInterval(cooldownInterval);
+          updateCooldown();
+        }
+      }, 1000);
+    }
+    
+    // Fungsi untuk membersihkan kode kedaluwarsa
+    function cleanExpiredCoupons() {
+      const now = Date.now();
+      activeCoupons = activeCoupons.filter(coupon => coupon.expiresAt > now);
+    }
+    
+    // Fungsi untuk menghasilkan kode 4 digit acak
+    function generateRandomCode() {
+      return Math.floor(1000 + Math.random() * 9000).toString();
+    }
+    
+    // Fungsi untuk memeriksa kode kupon
+    function redeemCoupon() {
+      let kode = document.getElementById("coupon").value.trim();
+      let result = document.getElementById("couponResult");
+      
+      // Bersihkan kode yang kedaluwarsa
+      cleanExpiredCoupons();
+      
+      // Cari kode yang valid
+      let validCoupon = activeCoupons.find(coupon => coupon.code === kode);
+      
+      if (validCoupon) {
+        diskon = validCoupon.discount;
+        result.innerText = `🎉 Kode valid! Diskon ${(diskon * 100)}% diterapkan.`;
+        result.style.color = "#a8e063";
+        result.style.background = "rgba(86, 171, 47, 0.2)";
+        
+        // Hapus kode yang sudah digunakan
+        activeCoupons = activeCoupons.filter(coupon => coupon.code !== kode);
+      } else {
+        diskon = 0;
+        result.innerText = "❌ Kode tidak valid atau sudah kadaluwarsa!";
+        result.style.color = "#ff416c";
+        result.style.background = "rgba(255, 65, 108, 0.2)";
+      }
+      hitungHarga();
+    }
 
     function hitungHarga() {
       let jumlah = document.getElementById("jumlah").value;
@@ -1199,23 +1608,6 @@
       let hargaDiskon = harga - (harga * diskon);
       document.getElementById("totalRobux").innerText = totalRobux;
       document.getElementById("totalHarga").innerText = hargaDiskon.toLocaleString("id-ID");
-    }
-
-    function redeemCoupon() {
-      let kode = document.getElementById("coupon").value.trim();
-      let result = document.getElementById("couponResult");
-      if (kode === "RanggStore") {
-        diskon = 0.02;
-        result.innerText = "🎉 Redeem Berhasil! Diskon 2% diterapkan.";
-        result.style.color = "#a8e063";
-        result.style.background = "rgba(86, 171, 47, 0.2)";
-      } else {
-        diskon = 0;
-        result.innerText = "❌ Kode salah";
-        result.style.color = "#ff416c";
-        result.style.background = "rgba(255, 65, 108, 0.2)";
-      }
-      hitungHarga();
     }
 
     function selectPayment(id) {
@@ -1276,7 +1668,7 @@
       let payment = document.querySelector('input[name="payment"]:checked');
       let totalHarga = document.getElementById("totalHarga").innerText;
 
-      let pesan = `Order Robux%0A////////////////////%0AUsername: ${username}%0AJumlah Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0ADiskon: ${diskon > 0 ? "2%" : "-"}%0APayment: ${payment.value}%0A////////////////////%0ARanggStore`;
+      let pesan = `Order Robux%0A////////////////////%0AUsername: ${username}%0AJumlah Robux: ${jumlah} R$%0AHarga: Rp ${totalHarga}%0ADiskon: ${diskon > 0 ? (diskon * 100) + "%" : "-"}%0APayment: ${payment.value}%0A////////////////////%0ARanggStore`;
 
       let nomorAdmin = "6283846078733"; 
       let url = `https://wa.me/${nomorAdmin}?text=${pesan}`;
@@ -1287,7 +1679,7 @@
 
     // Enhanced Dynamic Island dengan animasi lebih smooth
     const texts = [
-      "📌 Harap gunakan situs desktop untuk pengalaman yg lebih biak :)",
+      "📌 Harap gunakan situs desktop",
       "✨ Jika ada bug di web tolong lapor ke owner",
       "🔒 Aman dan amanah",
       "❤️ Dibuat dengan cinta🤭",
@@ -1472,6 +1864,190 @@
       closeOpsiPopup();
     }
 
+    // Spin Wheel Functions
+    function showSpinWheel() {
+      closeOpsiPopup();
+      document.getElementById("spinWheelPopup").classList.add("show");
+      
+      // Load data spin
+      loadSpinData();
+      
+      // Inisialisasi wheel
+      createWheel();
+      
+      // Reset result display
+      document.getElementById("wheelResult").style.display = 'none';
+      document.getElementById("spinBtn").disabled = spinData.remainingSpins <= 0;
+    }
+    
+    function closeSpinWheelPopup() {
+      document.getElementById("spinWheelPopup").classList.remove("show");
+    }
+    
+    // Fungsi untuk membuat wheel
+    function createWheel() {
+      const wheel = document.getElementById('wheel');
+      wheel.innerHTML = '';
+      wheel.style.transform = 'rotate(0deg)';
+      
+      const segments = [
+        { label: "5% DISKON", color: "var(--wheel-gold)", discount: 0.05, probability: 5 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
+        { label: "2% DISKON", color: "var(--wheel-silver)", discount: 0.02, probability: 2 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
+        { label: "1.5% DISKON", color: "var(--wheel-bronze)", discount: 0.015, probability: 1.5 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 }
+      ];
+      
+      const anglePerSegment = 360 / segments.length;
+      
+      segments.forEach((segment, index) => {
+        const item = document.createElement('div');
+        item.className = 'wheel-item';
+        item.style.background = segment.color;
+        item.style.transform = `rotate(${index * anglePerSegment}deg)`;
+        
+        const span = document.createElement('span');
+        span.textContent = segment.label;
+        item.appendChild(span);
+        
+        wheel.appendChild(item);
+      });
+    }
+    
+    // Fungsi untuk memutar wheel
+    function spinWheel() {
+      // Cek apakah bisa spin
+      const now = Date.now();
+      const spinBtn = document.getElementById('spinBtn');
+      
+      if (spinData.remainingSpins <= 0) {
+        alert('🚫 Maaf, spin kamu sudah habis untuk hari ini! Coba lagi besok.');
+        return;
+      }
+      
+      if (spinData.cooldownEndTime > now) {
+        const remainingTime = Math.ceil((spinData.cooldownEndTime - now) / 1000);
+        alert(`⏳ Tunggu ${remainingTime} detik lagi sebelum bisa spin ulang!`);
+        return;
+      }
+      
+      // Mulai spin
+      const wheel = document.getElementById('wheel');
+      const wheelResult = document.getElementById('wheelResult');
+      const resultPrize = document.getElementById('resultPrize');
+      const resultCode = document.getElementById('resultCode');
+      const resultTimer = document.getElementById('resultTimer');
+      
+      // Disable button selama spin
+      spinBtn.disabled = true;
+      spinBtn.innerHTML = '🌀 MEMUTAR...';
+      
+      // Kurangi sisa spin
+      spinData.remainingSpins--;
+      updateSpinDisplay();
+      
+      
+      const random = Math.random() * 100;
+      let selectedPrize;
+      
+      if (random < 5) { // 5% chance
+        selectedPrize = { label: "5% DISKON", discount: 0.05 };
+      } else if (random < 7) { // 2% chance (5-7)
+        selectedPrize = { label: "2% DISKON", discount: 0.02 };
+      } else if (random < 8.5) { // 1.5% chance (7-8.5)
+        selectedPrize = { label: "1.5% DISKON", discount: 0.015 };
+      } else { // 91.5% chance (8.5-100)
+        selectedPrize = { label: "ZONK", discount: 0 };
+      }
+      
+      const segments = [
+        { label: "5% DISKON", position: 0 },
+        { label: "ZONK", position: 1 },
+        { label: "2% DISKON", position: 2 },
+        { label: "ZONK", position: 3 },
+        { label: "1.5% DISKON", position: 4 },
+        { label: "ZONK", position: 5 },
+        { label: "ZONK", position: 6 },
+        { label: "ZONK", position: 7 }
+      ];
+      
+      const targetSegment = segments.find(s => s.label === selectedPrize.label);
+      const anglePerSegment = 360 / 8;
+      const targetAngle = 360 * 5 + (targetSegment.position * anglePerSegment);
+      const offset = 22.5; 
+      const finalAngle = 3600 - (targetAngle - offset);
+      
+      // Putar wheel
+      wheel.style.transition = 'transform 3s cubic-bezier(0.2, 0.8, 0.3, 1)';
+      wheel.style.transform = `rotate(${finalAngle}deg)`;
+      
+      setTimeout(() => {
+        if (selectedPrize.discount > 0) {
+          // Generate kode 4 digit acak
+          const code = generateRandomCode();
+          const expiresAt = Date.now() + (3 * 60 * 1000); 
+          
+          // Simpan kode ke array activeCoupons
+          activeCoupons.push({
+            code: code,
+            discount: selectedPrize.discount,
+            expiresAt: expiresAt
+          });
+          
+          // Tampilkan hasil
+          resultPrize.textContent = selectedPrize.label;
+          resultCode.textContent = code;
+          
+          // Mulai timer
+          startTimer(expiresAt, resultTimer, code);
+          
+          wheelResult.style.display = 'block';
+        } else {
+          resultPrize.textContent = "ZONK - Tidak dapat diskon";
+          resultCode.textContent = "Tidak ada kode";
+          resultTimer.textContent = "00:00";
+          
+          wheelResult.style.display = 'block';
+        }
+        
+        // Mulai cooldown
+        startCooldown();
+        saveSpinData();
+        
+        // Update tombol
+        spinBtn.disabled = spinData.remainingSpins <= 0;
+        spinBtn.innerHTML = spinData.remainingSpins > 0 ? '🎡 SPIN LAGI?' : '🚫 SPIN HABIS';
+      }, 3000);
+    }
+    
+    // Fungsi untuk timer kupon
+    function startTimer(expiresAt, timerElement, code) {
+      function updateTimer() {
+        const now = Date.now();
+        const remaining = expiresAt - now;
+        
+        if (remaining <= 0) {
+          timerElement.textContent = "00:00";
+          // Hapus kode dari activeCoupons
+          activeCoupons = activeCoupons.filter(coupon => coupon.code !== code);
+          return;
+        }
+        
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        
+        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Update setiap detik
+        setTimeout(updateTimer, 1000);
+      }
+      
+      updateTimer();
+    }
+    
     // Add shake animation for validation
     const style = document.createElement('style');
     style.textContent = `
@@ -1503,6 +2079,11 @@
     
     window.addEventListener('resize', checkResponsive);
     checkResponsive(); // Initial check
+    
+    
+    createWheel();
+    
+    loadSpinData();
   </script>
 </body>
 </html>
