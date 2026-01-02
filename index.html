@@ -3,14 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RanggStore</title>
+  <title>RanggStoreID</title>
   <style>
-    /* Blue Gradient Glass Theme */
+   
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0c3483 0%, #667eea 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      backdrop-filter: blur(20px);
+      transition: opacity 0.5s ease;
+    }
+    
+    .loading-content {
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    
+    .loading-spinner {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
+    
+    .spinner-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 8px solid transparent;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+    }
+    
+    .spinner-ring:nth-child(1) {
+      border-top-color: #4facfe;
+      animation-delay: 0.1s;
+    }
+    
+    .spinner-ring:nth-child(2) {
+      border-right-color: #00f2fe;
+      animation-delay: 0.2s;
+    }
+    
+    .spinner-ring:nth-child(3) {
+      border-bottom-color: #667eea;
+      animation-delay: 0.3s;
+    }
+    
+    .spinner-ring:nth-child(4) {
+      border-left-color: #764ba2;
+      animation-delay: 0.4s;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      margin: 30px 0;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #4facfe, #00f2fe, #667eea);
+      width: 0%;
+      border-radius: 10px;
+      transition: width 0.3s ease;
+      animation: progressPulse 1.5s infinite;
+    }
+    
+    @keyframes progressPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .loading-text {
+      color: white;
+      font-size: 18px;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    
+
+    .skeleton-screen {
+      margin-top: 40px;
+    }
+    
+    .skeleton-header {
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      animation: skeletonPulse 1.5s infinite;
+    }
+    
+    .skeleton-row {
+      height: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 5px;
+      margin-bottom: 15px;
+      animation: skeletonPulse 1.5s infinite;
+    }
+    
+    .skeleton-row:nth-child(2) {
+      width: 80%;
+    }
+    
+    .skeleton-row:nth-child(3) {
+      width: 60%;
+    }
+    
+    .skeleton-row:nth-child(4) {
+      width: 70%;
+    }
+    
+    @keyframes skeletonPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+  
     :root {
       --blue-bg: linear-gradient(135deg, #0c3483 0%, #667eea 100%);
-      --glass-bg: rgba(255, 255, 255, 0.15);
-      --glass-border: rgba(255, 255, 255, 0.25);
-      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
       --primary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
       --primary-dark: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
       --secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -38,19 +169,33 @@
       min-height: 100vh;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      backdrop-filter: blur(10px);
     }
     
-    /* Header dengan blue gradient glass effect */
+    /* Background blur tambahan */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(12, 52, 131, 0.7) 0%, rgba(102, 126, 234, 0.7) 100%);
+      backdrop-filter: blur(20px);
+      z-index: -1;
+    }
+    
+   
     header {
-      background: linear-gradient(135deg, rgba(76, 161, 175, 0.8) 0%, rgba(0, 140, 255, 0.8) 100%);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
       padding: 20px 25px;
       text-align: center;
       font-size: 24px;
       font-weight: 700;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       position: relative;
       color: var(--text-primary);
       letter-spacing: -0.5px;
@@ -63,7 +208,7 @@
       margin: auto;
     }
     
-    /* Stats dengan blue glassmorphism */
+  
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -72,16 +217,16 @@
     }
     
     .stat-box {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       padding: 22px 18px;
       border-radius: 18px;
       text-align: center;
       font-size: 20px;
       font-weight: 700;
       box-shadow: var(--glass-shadow);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       color: var(--text-primary);
       position: relative;
@@ -90,9 +235,9 @@
     
     .stat-box:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(79, 172, 254, 0.3);
-      border-color: rgba(79, 172, 254, 0.4);
-      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 28px rgba(79, 172, 254, 0.2);
+      border-color: rgba(79, 172, 254, 0.3);
+      background: rgba(255, 255, 255, 0.12);
     }
     
     .stat-box span {
@@ -105,16 +250,16 @@
       letter-spacing: 0.5px;
     }
     
-    /* Form card dengan blue glass effect */
+    /* Form card dengan glass effect dan blur */
     .form-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       padding: 28px;
       border-radius: 20px;
       box-shadow: var(--glass-shadow);
       margin-bottom: 28px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     .form-group {
@@ -134,17 +279,17 @@
       width: 100%;
       padding: 14px 16px;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       outline: none;
       font-size: 16px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       color: var(--text-primary);
       transition: all 0.2s ease;
       font-family: inherit;
     }
     
     input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.5);
     }
     
     select option {
@@ -153,12 +298,12 @@
     }
     
     input:focus, select:focus {
-      border-color: rgba(79, 172, 254, 0.8);
-      box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(79, 172, 254, 0.6);
+      box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.15);
+      background: rgba(255, 255, 255, 0.12);
     }
     
-    /* Payment options - Blue gradient style */
+   
     .payment-options {
       display: flex;
       gap: 12px;
@@ -171,15 +316,16 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       padding: 14px 20px;
       border-radius: 14px;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       flex: 1;
       min-width: 150px;
       justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       margin-bottom: 0;
+      backdrop-filter: blur(10px);
     }
     
     .payment-options input {
@@ -188,35 +334,34 @@
     
     .payment-options label.active {
       background: var(--primary);
-      border-color: rgba(255, 255, 255, 0.4);
+      border-color: rgba(255, 255, 255, 0.3);
       color: white;
       transform: scale(1.02);
-      box-shadow: 0 6px 18px rgba(79, 172, 254, 0.4);
+      box-shadow: 0 6px 18px rgba(79, 172, 254, 0.25);
     }
     
     .payment-options label:hover:not(.active) {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      border-color: rgba(79, 172, 254, 0.4);
-      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-color: rgba(79, 172, 254, 0.3);
+      background: rgba(255, 255, 255, 0.12);
     }
     
     .payment-options img {
       height: 28px;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
     }
     
-    /* Price box dengan blue gradient glass effect */
     .price-box {
-      background: linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%);
-      backdrop-filter: blur(15px);
+      background: linear-gradient(135deg, rgba(79, 172, 254, 0.15) 0%, rgba(0, 242, 254, 0.15) 100%);
+      backdrop-filter: blur(20px);
       padding: 22px;
       border-radius: 18px;
       text-align: center;
       margin: 25px 0;
       font-size: 22px;
       font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       position: relative;
       overflow: hidden;
       color: var(--text-primary);
@@ -239,7 +384,7 @@
       100% { background-position: -200% 0; }
     }
     
-    /* Button blue gradient style */
+   
     .btn-buy {
       width: 100%;
       background: var(--primary);
@@ -257,12 +402,13 @@
       overflow: hidden;
       font-family: inherit;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
     }
     
     .btn-buy:hover {
       background: var(--primary-dark);
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
     }
     
     .btn-buy:active {
@@ -270,14 +416,14 @@
     }
     
     footer {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       text-align: center;
       padding: 22px;
       font-size: 14px;
       color: var(--text-secondary);
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       margin-top: 40px;
     }
     
@@ -286,23 +432,23 @@
       font-weight: 700;
     }
 
-    /* Enhanced Dynamic Island - Blue gradient style */
+
     #dynamic-island {
       position: fixed;
       top: 16px;
       left: 50%;
       transform: translateX(-50%);
-      background: linear-gradient(135deg, rgba(79, 172, 254, 0.9) 0%, rgba(0, 242, 254, 0.9) 100%);
-      backdrop-filter: blur(30px) saturate(180%);
-      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      background: linear-gradient(135deg, rgba(79, 172, 254, 0.8) 0%, rgba(0, 242, 254, 0.8) 100%);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
       padding: 10px 28px;
       border-radius: 100px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       font-size: 14px;
       font-weight: 600;
       color: white;
       z-index: 1000;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       min-width: 280px;
       max-width: 380px;
@@ -316,7 +462,7 @@
     
     #dynamic-island:hover {
       transform: translateX(-50%) scale(1.03);
-      box-shadow: 0 12px 30px rgba(79, 172, 254, 0.3);
+      box-shadow: 0 12px 30px rgba(79, 172, 254, 0.2);
     }
     
     .island-circle {
@@ -342,14 +488,14 @@
       text-align: center;
     }
     
-    /* Enhanced Coupon */
+   
     .coupon-box {
       margin-top: 22px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
       padding: 18px;
       border-radius: 16px;
-      border: 1px dashed rgba(79, 172, 254, 0.4);
+      border: 1px dashed rgba(79, 172, 254, 0.3);
     }
     
     .coupon-box input {
@@ -376,7 +522,7 @@
     
     .coupon-box button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
       background: var(--primary-dark);
     }
     
@@ -386,11 +532,11 @@
       font-weight: 600;
       padding: 10px;
       border-radius: 10px;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.08);
       text-align: center;
     }
 
-    /* Enhanced Popup - Blue glass style */
+
     .popup {
       display: none;
       position: fixed;
@@ -398,9 +544,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       justify-content: center;
       align-items: center;
       z-index: 9999;
@@ -415,17 +561,17 @@
     }
     
     .popup-content {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
       padding: 32px;
       border-radius: 24px;
       width: 90%;
       max-width: 480px;
       text-align: left;
       color: var(--text-primary);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       transform: translateY(30px) scale(0.95);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -493,30 +639,32 @@
     }
     
     .btn-cancel {
-      background: rgba(142, 142, 147, 0.3);
+      background: rgba(142, 142, 147, 0.2);
       color: var(--text-primary);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
     }
     
     .btn-cancel:hover {
-      background: rgba(142, 142, 147, 0.4);
+      background: rgba(142, 142, 147, 0.3);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     }
     
     .btn-confirm {
       background: var(--primary);
       color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
     }
     
     .btn-confirm:hover {
       background: var(--primary-dark);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
+      box-shadow: 0 8px 20px rgba(79, 172, 254, 0.25);
     }
 
-    /* Floating particles - Blue theme */
+  
     .particles {
       position: fixed;
       top: 0;
@@ -524,17 +672,17 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: -1;
     }
     
     .particle {
       position: absolute;
       width: 2px;
       height: 2px;
-      background: rgba(79, 172, 254, 0.5);
+      background: rgba(79, 172, 254, 0.3);
       border-radius: 50%;
       animation: float 20s infinite linear;
-      box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+      box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
     }
     
     @keyframes float {
@@ -554,7 +702,7 @@
       }
     }
 
-    /* Opsi Lainnya Section */
+   
     .opsi-lainnya-section {
       margin-top: 20px;
       text-align: center;
@@ -569,7 +717,7 @@
     
     .opsi-lainnya-btn {
       background: transparent;
-      border: 1.5px solid rgba(79, 172, 254, 0.8);
+      border: 1.5px solid rgba(79, 172, 254, 0.6);
       color: #4facfe;
       padding: 12px 28px;
       border-radius: 12px;
@@ -581,15 +729,16 @@
       margin: 8px 0;
       font-family: inherit;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
     }
     
     .opsi-lainnya-btn:hover {
-      background: rgba(79, 172, 254, 0.2);
+      background: rgba(79, 172, 254, 0.15);
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
     }
 
-    /* Opsi Lainnya Popup - Updated for 3 options */
+   
     .opsi-popup-content {
       max-width: 600px;
       width: 90%;
@@ -603,26 +752,52 @@
     }
     
     .opsi-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
       border-radius: 18px;
       padding: 22px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       min-height: 180px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+   
+    .opsi-card:nth-child(1) {
+      animation: fadeSlideUp 0.5s ease 0.1s forwards;
+    }
+    
+    .opsi-card:nth-child(2) {
+      animation: fadeSlideUp 0.5s ease 0.2s forwards;
+    }
+    
+    .opsi-card:nth-child(3) {
+      animation: fadeSlideUp 0.5s ease 0.3s forwards;
+    }
+    
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .opsi-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(79, 172, 254, 0.6);
-      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
-      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(79, 172, 254, 0.4);
+      box-shadow: 0 10px 25px rgba(79, 172, 254, 0.15);
+      background: rgba(255, 255, 255, 0.12);
     }
     
     .opsi-card h3 {
@@ -642,9 +817,14 @@
       font-size: 42px;
       margin-bottom: 12px;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    
+    .opsi-card:hover .opsi-icon {
+      transform: scale(1.1) rotate(5deg);
     }
 
-    /* Fish It Form - Grid Layout dan Accordion */
+
     .fish-form {
       margin-top: 20px;
     }
@@ -657,11 +837,11 @@
     }
     
     .fish-grid-item {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 14px;
       padding: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
     }
     
     .fish-grid-item h4 {
@@ -681,26 +861,27 @@
     }
     
     .duration-card {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 10px;
       padding: 12px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
     }
     
     .duration-card.active {
-      border-color: rgba(79, 172, 254, 0.8);
-      background: rgba(79, 172, 254, 0.2);
+      border-color: rgba(79, 172, 254, 0.6);
+      background: rgba(79, 172, 254, 0.15);
       transform: scale(1.02);
-      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+      box-shadow: 0 4px 12px rgba(79, 172, 254, 0.15);
     }
     
     .duration-card:hover {
-      border-color: rgba(79, 172, 254, 0.6);
+      border-color: rgba(79, 172, 254, 0.4);
       transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.12);
     }
     
     .duration-price {
@@ -716,26 +897,27 @@
       font-size: 12px;
     }
     
-    /* Accordion Styles */
+  
     .accordion {
       margin: 12px 0;
       border-radius: 12px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     .accordion-header {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       padding: 14px 16px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
       transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
     
     .accordion-header:hover {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.12);
     }
     
     .accordion-header h4 {
@@ -753,7 +935,7 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease-out;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.08);
     }
     
     .accordion-content.active {
@@ -777,14 +959,14 @@
     
     .secure-badge {
       display: inline-block;
-      background: rgba(86, 171, 47, 0.3);
+      background: rgba(86, 171, 47, 0.2);
       color: #a8e063;
       padding: 4px 10px;
       border-radius: 10px;
       font-size: 11px;
       margin-left: 8px;
       font-weight: 600;
-      border: 1px solid rgba(86, 171, 47, 0.4);
+      border: 1px solid rgba(86, 171, 47, 0.3);
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
@@ -793,22 +975,22 @@
       font-size: 13px;
       color: #ffd200;
       margin-top: 10px;
-      background: rgba(247, 151, 30, 0.2);
+      background: rgba(247, 151, 30, 0.15);
       padding: 10px;
       border-radius: 10px;
       margin-bottom: 20px;
-      border: 1px solid rgba(247, 151, 30, 0.3);
+      border: 1px solid rgba(247, 151, 30, 0.2);
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
-    /* Fish Order Popup */
+
     .order-details {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 14px;
       padding: 18px;
       margin: 18px 0;
-      border: 1px solid rgba(79, 172, 254, 0.3);
-      backdrop-filter: blur(10px);
+      border: 1px solid rgba(79, 172, 254, 0.2);
+      backdrop-filter: blur(15px);
     }
     
     .order-detail-item {
@@ -816,7 +998,7 @@
       justify-content: space-between;
       margin-bottom: 10px;
       padding-bottom: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     
     .order-detail-item:last-child {
@@ -834,13 +1016,13 @@
       font-size: 14px;
     }
     
-    /* Close Button */
+ 
     .close-btn {
       position: absolute;
       top: 16px;
       right: 16px;
-      background: rgba(255, 65, 108, 0.3);
-      border: 1px solid rgba(255, 65, 108, 0.5);
+      background: rgba(255, 65, 108, 0.2);
+      border: 1px solid rgba(255, 65, 108, 0.3);
       color: #ff416c;
       width: 32px;
       height: 32px;
@@ -853,10 +1035,11 @@
       font-weight: bold;
       transition: all 0.2s ease;
       z-index: 10;
+      backdrop-filter: blur(10px);
     }
     
     .close-btn:hover {
-      background: rgba(255, 65, 108, 0.5);
+      background: rgba(255, 65, 108, 0.3);
       transform: scale(1.1);
     }
     
@@ -879,9 +1062,10 @@
       border-radius: 50%;
       position: relative;
       overflow: hidden;
-      border: 8px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      border: 8px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
       transition: transform 3s cubic-bezier(0.2, 0.8, 0.3, 1);
+      backdrop-filter: blur(5px);
     }
     
     .wheel-item {
@@ -925,7 +1109,7 @@
       border-left: 20px solid transparent;
       border-right: 20px solid transparent;
       border-top: 30px solid #ff416c;
-      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
+      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
     }
     
     .spin-btn {
@@ -940,11 +1124,12 @@
       transition: all 0.3s ease;
       margin-top: 20px;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
     }
     
     .spin-btn:hover:not(:disabled) {
       transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(247, 151, 30, 0.4);
+      box-shadow: 0 10px 25px rgba(247, 151, 30, 0.3);
     }
     
     .spin-btn:disabled {
@@ -956,8 +1141,9 @@
       margin-top: 25px;
       padding: 20px;
       border-radius: 15px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
     }
     
     .result-code {
@@ -966,7 +1152,7 @@
       letter-spacing: 5px;
       margin: 10px 0;
       padding: 15px;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.15);
       border-radius: 10px;
       font-family: 'Courier New', monospace;
     }
@@ -984,8 +1170,9 @@
       align-items: center;
       margin: 15px 0;
       padding: 12px;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.1);
       border-radius: 10px;
+      backdrop-filter: blur(10px);
     }
     
     .spin-counter {
@@ -1011,9 +1198,9 @@
       flex-direction: column;
       align-items: center;
       padding: 8px 12px;
-      background: rgba(255, 65, 108, 0.2);
+      background: rgba(255, 65, 108, 0.15);
       border-radius: 8px;
-      border: 1px solid rgba(255, 65, 108, 0.3);
+      border: 1px solid rgba(255, 65, 108, 0.2);
     }
     
     .cooldown-label {
@@ -1032,9 +1219,10 @@
       margin-top: 20px;
       font-size: 13px;
       color: var(--text-secondary);
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.08);
       padding: 12px;
       border-radius: 10px;
+      backdrop-filter: blur(10px);
     }
     
     .probability-item {
@@ -1045,13 +1233,14 @@
     
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      from { 
+        opacity: 0; 
+        transform: translateY(10px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0);
+      }
     }
     
     /* Responsive fixes untuk mobile */
@@ -1131,6 +1320,11 @@
         flex-direction: column;
         gap: 10px;
       }
+      
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+      }
     }
     
     @media (max-width: 480px) {
@@ -1155,18 +1349,51 @@
         width: 220px;
         height: 220px;
       }
+      
+      #loading-screen {
+        padding: 20px;
+      }
+      
+      .loading-content {
+        width: 95%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Floating Particles -->
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+      </div>
+      
+      <div class="loading-text">Memuat RanggStoreID...</div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="loadingProgress"></div>
+      </div>
+      
+      <div class="skeleton-screen">
+        <div class="skeleton-header"></div>
+        <div class="skeleton-row"></div>
+        <div class="skeleton-row"></div>
+        <div class="skeleton-row"></div>
+        <div class="skeleton-row"></div>
+      </div>
+    </div>
+  </div>
+
+ 
   <div class="particles" id="particles"></div>
 
   <header>
     RanggStore Official
   </header>
 
-  <!-- Enhanced Dynamic Island -->
   <div id="dynamic-island">
     <div class="island-circle"></div>
     <span id="island-text"></span>
@@ -1175,10 +1402,10 @@
 
   <div class="container">
     <div class="stats">
-      <div class="stat-box">ReStock Soon... <span>Available Stock</span></div>
+      <div class="stat-box">Restock soon... <span>Available Stock</span></div>
       <div class="stat-box">Rp 15.000 / 100 R$ <span>Price</span></div>
       <div class="stat-box">200 R$ <span>Minimum Purchase</span></div>
-      <div class="stat-box">150 <span>Total Order</span></div>
+      <div class="stat-box">150+ <span>Total Order</span></div>
     </div>
 
     <div class="form-card">
@@ -1227,7 +1454,6 @@
         </div>
       </div>
 
-      <!-- Opsi Lainnya Section - Fixed untuk responsif -->
       <div class="opsi-lainnya-section">
         <div class="opsi-lainnya-text">Mau coba opsi lainnya?</div>
         <button class="opsi-lainnya-btn" onclick="showOpsiPopup()">Opsi Lainnya</button>
@@ -1238,7 +1464,7 @@
   </div>
 
   <footer>
-    © 2025 <strong>RanggStore</strong><br>
+    © 2025 <strong>RanggStoreID</strong><br>
     Powered By Github.io
   </footer>
 
@@ -1250,7 +1476,7 @@
       <p><b>👤 Username:</b> <span id="popupUsername"></span></p>
       <p><b>💰 Jumlah Robux:</b> <span id="popupRobux"></span></p>
       <p><b>💸 Price:</b> Rp <span id="popupHarga"></span></p>
-      <p><b>🎯 Tolong buat Game Pass Senilai:</b> <span id="popupGamepass"></span></p>
+      <p><b> Tolong buat Game Pass Senilai:</b> <span id="popupGamepass"></span></p>
       <p>Jika tidak tahu membuat game pass:<br>
         <a href="https://youtu.be/PRO9QRvo4KA?si=Z5j_aFhdsHUMtemb" target="_blank">📺 Tutorial Game Pass</a>
       </p>
@@ -1261,7 +1487,7 @@
     </div>
   </div>
 
-  <!-- Opsi Lainnya Popup - Updated dengan 3 opsi -->
+  <!-- Opsi Lainnya Popup dengan animasi fade + slide -->
   <div class="popup" id="opsiPopup">
     <div class="popup-content opsi-popup-content">
       <h2>🎮 RanggStore 🎮</h2>
@@ -1291,7 +1517,7 @@
     </div>
   </div>
 
-  <!-- Fish It Form Popup - Grid Layout & Accordion -->
+  <!-- Fish It Form Popup -->
   <div class="popup" id="fishPopup">
     <div class="popup-content">
       <button class="close-btn" onclick="closeFishPopup()">×</button>
@@ -1335,7 +1561,7 @@
           <div class="accordion-content" id="benefits">
             <div class="benefit-item">✓ Bebas pilih spot mancing di mana saja</div>
             <div class="benefit-item">✓ Ikan hasil tangkapan tidak akan diambil</div>
-            <div class="benefit-item">✓ Anti HackBack</div>
+            <div class="benefit-item">✓ Anti Hackback</div>
           </div>
         </div>
         
@@ -1424,7 +1650,7 @@
       <div class="wheel-container">
         <div class="wheel-pointer"></div>
         <div class="wheel" id="wheel">
-          <!-- Wheel items akan diisi oleh JavaScript -->
+          
         </div>
       </div>
       
@@ -1433,19 +1659,19 @@
       <div class="wheel-probability">
         <div class="probability-item">
           <span>🎖️ 5% Diskon</span>
-          <span>5% chance</span>
+          <span>0.5% chance</span>
         </div>
         <div class="probability-item">
           <span>🥈 2% Diskon</span>
-          <span>2% chance</span>
+          <span>2.5% chance</span>
         </div>
         <div class="probability-item">
           <span>🥉 1.5% Diskon</span>
-          <span>1.5% chance</span>
+          <span>30% chance</span>
         </div>
         <div class="probability-item">
           <span>💀 ZONK</span>
-          <span>91.5% chance</span>
+          <span>67% chance</span>
         </div>
       </div>
       
@@ -1460,11 +1686,73 @@
   </div>
 
   <script>
+    // Sistem Loading
+    window.addEventListener('DOMContentLoaded', function() {
+      const loadingScreen = document.getElementById('loading-screen');
+      const progressBar = document.getElementById('loadingProgress');
+     
+      let loadTime;
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      
+      if (connection) {
+       
+        const effectiveType = connection.effectiveType;
+        const downlink = connection.downlink; 
+        
+        if (effectiveType === '4g' || downlink > 5) {
+          // Koneksi cepat: 2-3 detik
+          loadTime = 2000 + Math.random() * 1000; // 2000-3000ms
+        } else if (effectiveType === '3g' || downlink > 1) {
+          // Koneksi sedang: 3-5 detik
+          loadTime = 3000 + Math.random() * 2000; // 3000-5000ms
+        } else {
+          // Koneksi lambat: 5-8 detik
+          loadTime = 5000 + Math.random() * 3000; // 5000-8000ms
+        }
+      } else {
+        // Fallback: random antara 2-8 detik
+        loadTime = 2000 + Math.random() * 6000; // 2000-8000ms
+      }
+      
+      // proses bar
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 20; 
+        if (progress > 100) progress = 100;
+        progressBar.style.width = progress + '%';
+        
+        if (progress >= 100) {
+          clearInterval(interval);
+        }
+      }, loadTime / 20); 
+      
+     
+      setTimeout(() => {
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+         
+          initComponents();
+        }, 500);
+      }, loadTime);
+    });
+    
+   
+    function initComponents() {
+      updateIsland();
+      createParticles();
+      createWheel();
+      loadSpinData(); 
+      selectDuration('24jam'); 
+      checkResponsive();
+    }
+
+   
     let hargaPer100 = 15000;
     let diskon = 0;
-    let activeCoupons = []; // Array untuk menyimpan kode diskon aktif
+    let activeCoupons = []; 
     
-    // Sistem Spin Limit & Cooldown
+  
     let spinData = {
       remainingSpins: 3,
       lastSpinTime: 0,
@@ -1482,6 +1770,7 @@
         const lastSpinDate = parsedData.lastSpinDate ? new Date(parsedData.lastSpinDate).toDateString() : null;
         
         if (lastSpinDate !== today) {
+         
           spinData = {
             remainingSpins: 3,
             lastSpinTime: 0,
@@ -1504,11 +1793,12 @@
       updateCooldown();
     }
     
+    // Save spin data ke localStorage
     function saveSpinData() {
       localStorage.setItem('ranggstore_spin_data', JSON.stringify(spinData));
     }
     
-    // Update display spin count
+  
     function updateSpinDisplay() {
       const remainingSpinsElement = document.getElementById('remainingSpins');
       if (remainingSpinsElement) {
@@ -1547,7 +1837,7 @@
     
     // Start cooldown timer
     function startCooldown() {
-      spinData.cooldownEndTime = Date.now() + 12000; // 12 detik
+      spinData.cooldownEndTime = Date.now() + 5000;
       spinData.lastSpinTime = Date.now();
       saveSpinData();
       
@@ -1562,23 +1852,23 @@
       }, 1000);
     }
     
-    // Fungsi untuk membersihkan kode kedaluwarsa
+    //membersihkan kode kedaluwarsa
     function cleanExpiredCoupons() {
       const now = Date.now();
       activeCoupons = activeCoupons.filter(coupon => coupon.expiresAt > now);
     }
     
-    // Fungsi untuk menghasilkan kode 4 digit acak
+    //menghasilkan kode 4 digit acak
     function generateRandomCode() {
       return Math.floor(1000 + Math.random() * 9000).toString();
     }
     
-    // Fungsi untuk memeriksa kode kupon
+    // memeriksa kode kupon
     function redeemCoupon() {
       let kode = document.getElementById("coupon").value.trim();
       let result = document.getElementById("couponResult");
       
-      // Bersihkan kode yang kedaluwarsa
+     
       cleanExpiredCoupons();
       
       // Cari kode yang valid
@@ -1741,9 +2031,7 @@
       }
     }
 
-    createParticles();
-
-    // Opsi Lainnya Functions
+    
     function showOpsiPopup() {
       document.getElementById("opsiPopup").classList.add("show");
     }
@@ -1801,7 +2089,7 @@
       let username = document.getElementById("fishUsername").value;
       
       if (!username) {
-        // Animasi shake untuk form kosong
+
         const input = document.getElementById("fishUsername");
         input.style.animation = 'none';
         input.offsetHeight;
@@ -1842,14 +2130,14 @@
         return;
       }
       
-      // Format pesan WhatsApp tanpa password
+      // Format pesan WhatsApp 
       let pesan = `Joki afk Fish it%0A====================%0AUsername: ${username}%0ABerapa Lama joki: ${durasi}%0APayment: ${selectedFishPayment}%0ATotal: Rp ${harga}%0A====================%0ARanggStore`;
       
       let nomorAdmin = "6283846078733"; 
       let url = `https://wa.me/${nomorAdmin}?text=${pesan}`;
       window.open(url, "_blank");
       
-      // Clear form setelah mengirim
+    
       document.getElementById("fishUsername").value = '';
       
       closeFishOrderPopup();
@@ -1869,13 +2157,13 @@
       closeOpsiPopup();
       document.getElementById("spinWheelPopup").classList.add("show");
       
-      // Load data spin
+    
       loadSpinData();
       
-      // Inisialisasi wheel
+     
       createWheel();
       
-      // Reset result display
+     
       document.getElementById("wheelResult").style.display = 'none';
       document.getElementById("spinBtn").disabled = spinData.remainingSpins <= 0;
     }
@@ -1884,21 +2172,22 @@
       document.getElementById("spinWheelPopup").classList.remove("show");
     }
     
-    // Fungsi untuk membuat wheel
+  
     function createWheel() {
       const wheel = document.getElementById('wheel');
       wheel.innerHTML = '';
       wheel.style.transform = 'rotate(0deg)';
       
+      
       const segments = [
-        { label: "5% DISKON", color: "var(--wheel-gold)", discount: 0.05, probability: 5 },
-        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
-        { label: "2% DISKON", color: "var(--wheel-silver)", discount: 0.02, probability: 2 },
-        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
-        { label: "1.5% DISKON", color: "var(--wheel-bronze)", discount: 0.015, probability: 1.5 },
-        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
-        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 },
-        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 91.5 }
+        { label: "5% DISKON", color: "var(--wheel-gold)", discount: 0.05, probability: 0.5 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 67 },
+        { label: "2% DISKON", color: "var(--wheel-silver)", discount: 0.02, probability: 2.5 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 67 },
+        { label: "1.5% DISKON", color: "var(--wheel-bronze)", discount: 0.015, probability: 30 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 67 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 67 },
+        { label: "ZONK", color: "var(--wheel-lose)", discount: 0, probability: 67 }
       ];
       
       const anglePerSegment = 360 / segments.length;
@@ -1917,14 +2206,14 @@
       });
     }
     
-    // Fungsi untuk memutar wheel
+   
     function spinWheel() {
-      // Cek apakah bisa spin
+      
       const now = Date.now();
       const spinBtn = document.getElementById('spinBtn');
       
       if (spinData.remainingSpins <= 0) {
-        alert('🚫 Maaf, spin kamu sudah habis untuk hari ini! Coba lagi besok.');
+        alert('🚫 Maaf, spin kamu sudah habis untuk hari ini! Coba lagi esok.');
         return;
       }
       
@@ -1934,32 +2223,33 @@
         return;
       }
       
-      // Mulai spin
+   
       const wheel = document.getElementById('wheel');
       const wheelResult = document.getElementById('wheelResult');
       const resultPrize = document.getElementById('resultPrize');
       const resultCode = document.getElementById('resultCode');
       const resultTimer = document.getElementById('resultTimer');
       
-      // Disable button selama spin
+     
       spinBtn.disabled = true;
       spinBtn.innerHTML = '🌀 MEMUTAR...';
       
-      // Kurangi sisa spin
+      
       spinData.remainingSpins--;
       updateSpinDisplay();
       
-      
+     
       const random = Math.random() * 100;
       let selectedPrize;
+ 
       
-      if (random < 5) { // 5% chance
+      if (random < 0.5) {
         selectedPrize = { label: "5% DISKON", discount: 0.05 };
-      } else if (random < 7) { // 2% chance (5-7)
+      } else if (random < 3) { // 0.5-3
         selectedPrize = { label: "2% DISKON", discount: 0.02 };
-      } else if (random < 8.5) { // 1.5% chance (7-8.5)
+      } else if (random < 33) { // 3-33
         selectedPrize = { label: "1.5% DISKON", discount: 0.015 };
-      } else { // 91.5% chance (8.5-100)
+      } else {
         selectedPrize = { label: "ZONK", discount: 0 };
       }
       
@@ -1977,31 +2267,29 @@
       const targetSegment = segments.find(s => s.label === selectedPrize.label);
       const anglePerSegment = 360 / 8;
       const targetAngle = 360 * 5 + (targetSegment.position * anglePerSegment);
-      const offset = 22.5; 
+      const offset = 22.5; // Offset untuk pointer
       const finalAngle = 3600 - (targetAngle - offset);
       
       // Putar wheel
       wheel.style.transition = 'transform 3s cubic-bezier(0.2, 0.8, 0.3, 1)';
       wheel.style.transform = `rotate(${finalAngle}deg)`;
       
+      // Tampilkan hasil setelah spin selesai
       setTimeout(() => {
         if (selectedPrize.discount > 0) {
           // Generate kode 4 digit acak
           const code = generateRandomCode();
-          const expiresAt = Date.now() + (3 * 60 * 1000); 
+          const expiresAt = Date.now() + (5 * 60 * 1000); // 5 menit dari sekarang
           
-          // Simpan kode ke array activeCoupons
           activeCoupons.push({
             code: code,
             discount: selectedPrize.discount,
             expiresAt: expiresAt
           });
-          
-          // Tampilkan hasil
+                   
           resultPrize.textContent = selectedPrize.label;
           resultCode.textContent = code;
-          
-          // Mulai timer
+                
           startTimer(expiresAt, resultTimer, code);
           
           wheelResult.style.display = 'block';
@@ -2031,7 +2319,7 @@
         
         if (remaining <= 0) {
           timerElement.textContent = "00:00";
-          // Hapus kode dari activeCoupons
+
           activeCoupons = activeCoupons.filter(coupon => coupon.code !== code);
           return;
         }
@@ -2041,14 +2329,14 @@
         
         timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         
-        // Update setiap detik
+        
         setTimeout(updateTimer, 1000);
       }
       
       updateTimer();
     }
     
-    // Add shake animation for validation
+  
     const style = document.createElement('style');
     style.textContent = `
       @keyframes shake {
@@ -2059,31 +2347,29 @@
     `;
     document.head.appendChild(style);
     
-    // Initialize fish form
-    selectDuration('24jam');
-    
-    // Responsive check untuk dynamic island
+   
     function checkResponsive() {
       if (window.innerWidth <= 768) {
-        island.style.fontSize = '13px';
-        island.style.padding = '8px 20px';
-        island.style.minWidth = '260px';
-        island.style.maxWidth = '300px';
+        if (island) {
+          island.style.fontSize = '13px';
+          island.style.padding = '8px 20px';
+          island.style.minWidth = '260px';
+          island.style.maxWidth = '300px';
+        }
       } else {
-        island.style.fontSize = '14px';
-        island.style.padding = '10px 28px';
-        island.style.minWidth = '280px';
-        island.style.maxWidth = '380px';
+        if (island) {
+          island.style.fontSize = '14px';
+          island.style.padding = '10px 28px';
+          island.style.minWidth = '280px';
+          island.style.maxWidth = '380px';
+        }
       }
     }
     
     window.addEventListener('resize', checkResponsive);
-    checkResponsive(); // Initial check
     
-    
+  
     createWheel();
-    
-    loadSpinData();
   </script>
 </body>
 </html>
